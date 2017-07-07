@@ -42,7 +42,7 @@ function TurretLaser (battle, layer, x, y) {
 	this.m_shadowSprite.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_shadowSprite.setLocalZOrder (LAYER_TOWER_SHADOW);
 	this.m_shadowSprite.setRotation(this.m_angle);
-	this.m_shadowSprite.setPosition (cc.p(spriteX, spriteY));
+	this.m_shadowSprite.setPosition (cc.p(spriteX + TURRET_SHADOW_OFFSET, spriteY - TURRET_SHADOW_OFFSET));
 	layer.addChild(this.m_shadowSprite);
 	
 	this.m_turretSprite = GetFromPool("res/GSAction/Turret/4-Laser/Turret.png");

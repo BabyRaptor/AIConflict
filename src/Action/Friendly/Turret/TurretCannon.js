@@ -1,3 +1,4 @@
+var TURRET_SHADOW_OFFSET = 5;
 var TURRET_CANNON_NAME = "HE cannon";
 var TURRET_CANNON = 2;
 var TURRET_CANNON_PRICE = [200, 125, 150, 175, 200];
@@ -40,7 +41,7 @@ function TurretCannon (battle, layer, x, y) {
 	this.m_shadowSprite.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_shadowSprite.setLocalZOrder (LAYER_TOWER_SHADOW);
 	this.m_shadowSprite.setRotation(this.m_angle);
-	this.m_shadowSprite.setPosition (cc.p(spriteX, spriteY));
+	this.m_shadowSprite.setPosition (cc.p(spriteX + TURRET_SHADOW_OFFSET, spriteY - TURRET_SHADOW_OFFSET));
 	layer.addChild(this.m_shadowSprite);
 	
 	this.m_turretSprite = GetFromPool("res/GSAction/Turret/2-Cannon/Turret.png");
