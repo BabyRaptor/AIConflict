@@ -139,7 +139,7 @@ g_gsUpgradeMainLayer.UpdateUI = function () {
 
 
 g_gsUpgradeMainLayer.OpenShop = function() {
-	
+	PushShop();
 }
 
 

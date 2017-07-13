@@ -16,6 +16,8 @@ var g_gsLoader;
 var g_gsMenu;
 var g_gsMission;
 var g_gsInfo;
+var g_gsShop;
+var g_gsOption;
 var g_gsUpgrade;
 var g_gsAction;
 
@@ -26,6 +28,8 @@ function GlobalInit() {
 	g_gsMenu = new GSMenu();
 	g_gsMission = new GSMission();
 	g_gsInfo = new GSInfo();
+	g_gsShop = new GSShop();
+	g_gsOption = new GSOption();
 	g_gsUpgrade = new GSUpgrade();
 	g_gsAction = new GSAction();
 	
@@ -66,6 +70,12 @@ function PushUpgrade() {
 }
 function PushInfo() {
 	PushState (g_gsInfo);
+}
+function PushOption() {
+	PushState (g_gsOption);
+}
+function PushShop() {
+	PushState (g_gsShop);
 }
 
 function PushAction (campaign, mission) {

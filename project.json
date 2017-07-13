@@ -36,6 +36,7 @@
 		"src/Action/Friendly/Turret/TurretStatic.js",
 		"src/Action/Friendly/Turret/TurretShock.js",
 		
+		"src/Action/Friendly/Projectile/ProjectileBaseLaser.js",
 		"src/Action/Friendly/Projectile/ProjectileGatling.js",
 		"src/Action/Friendly/Projectile/ProjectileCannon.js",
 		"src/Action/Friendly/Projectile/ProjectileMissile.js",
@@ -65,6 +66,10 @@
 		
 		"src/State/GSInfo/TurretWiki.js",
 		"src/State/GSInfo.js",
+		
+		"src/State/GSOption.js",
+		
+		"src/State/GSShop.js",
 		
 		
 		

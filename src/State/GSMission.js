@@ -76,7 +76,6 @@ g_gsMissionBGLayer.update = function (deltaTime) {
 
 
 
-
 var HEX_WIDTH = 64;
 var HEX_HEIGHT = 56;
 var HEX_SPRITE_W = 74;
@@ -88,7 +87,10 @@ var HEX_BLOCK_H = ((CANVAS_H / HEX_HEIGHT) >> 0) + 2;
 var DEFAULT_HEX_BLOCK_W = ((CANVAS_W / HEX_WIDTH) >> 0) + 2;
 var HEX_BLOCK_W_OFFSET = 0;
 
-var HEX_ALPHA = 120;
+var HEX_ALPHA = 0;
+var TARGET_SIZE = 120;
+var TARGET_ALPHA = 250;
+var TARGET_ROTATE_SPEED = 20;
 
 var STAR_HEX_X = 9;
 var STAR_HEX_Y = 7;
@@ -113,6 +115,8 @@ function CreateHexLayer() {
 		this.m_hexSelecting = null;
 		this.m_hexSelectingAlpha = 0;
 		
+		this.m_targetAlpha = 0;
+		
 		this.m_hexSprite = [];
 		for (var i=0; i<HEX_BLOCK_W; i++) {
 			this.m_hexSprite[i] = [];
@@ -133,6 +137,7 @@ function CreateHexLayer() {
 				this.m_hexSprite[i][j].setOpacity (0);
 				this.m_hexSprite[i][j].setTextureRect (cc.rect(0, 0, HEX_SPRITE_W, HEX_SPRITE_H));
 				this.m_hexSprite[i][j].setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
+				
 				this.addChild(this.m_hexSprite[i][j]);
 			}
 		}
@@ -159,6 +164,8 @@ function CreateHexLayer() {
 		this.addChild(this.m_starGlowSprite);
 		
 		
+		this.m_targetAngle = [];
+		this.m_targetSprite = [];
 		this.m_planetSprite = [];
 		for (var i=0; i<g_campaignData.length; i++) {
 			var x = 0;
@@ -169,11 +176,20 @@ function CreateHexLayer() {
 			else if (g_campaignData[i].m_mapY % 2 == 1) {
 				x = ((g_campaignData[i].m_mapX + HEX_BLOCK_W_OFFSET) + 0.5) * HEX_WIDTH - CANVAS_W * 0.5;
 			}
-				
+			
 			this.m_planetSprite[i] = cc.Sprite.create("res/GSMission/Objects/Planet-" + (i + 1) + ".png");
 			this.m_planetSprite[i].setPosition(cc.p(x, y));
 			this.m_planetSprite[i].setLocalZOrder (LAYER_BACKGROUND + 9);
 			this.addChild(this.m_planetSprite[i]);
+			
+			this.m_targetAngle[i] = Math.random() * 360;
+			this.m_targetSprite[i] = cc.Sprite.create("res/GSMission/Target/Current.png");
+			this.m_targetSprite[i].setPosition(cc.p(x, y));
+			this.m_targetSprite[i].setLocalZOrder (LAYER_BACKGROUND + 10);
+			this.m_targetSprite[i].setOpacity(0);
+			this.m_targetSprite[i].setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
+			this.m_targetSprite[i].setRotation(this.m_targetAngle[i]);
+			this.addChild(this.m_targetSprite[i]);
 		}
 		
 		
@@ -195,6 +211,7 @@ function CreateHexLayer() {
 			if (this.m_hexAlpha > HEX_ALPHA) {
 				this.m_hexAlpha = HEX_ALPHA;
 			}
+			
 			for (var i=0; i<HEX_BLOCK_W; i++) {
 				for (var j=0; j<HEX_BLOCK_H; j++) {
 					this.m_hexSprite[i][j].setOpacity (this.m_hexAlpha);
@@ -211,6 +228,26 @@ function CreateHexLayer() {
 				if (actualAlpha < 0) actualAlpha *= -1;
 				
 				this.m_hexSelecting.setOpacity (actualAlpha * 200 + 55);
+			}
+			
+			this.m_targetAlpha += deltaTime * TARGET_ALPHA * 2;
+			if (this.m_targetAlpha > TARGET_ALPHA) {
+				this.m_targetAlpha = TARGET_ALPHA;
+			}
+			for (var i=0; i<this.m_targetSprite.length; i++) {
+				if (((g_profile.m_progress / 3) >> 0) < i) {
+					this.m_targetSprite[i].setTexture("res/GSMission/Target/Locked.png");
+				}
+				else if (((g_profile.m_progress / 3) >> 0) > i) {
+					this.m_targetSprite[i].setTexture("res/GSMission/Target/Cleared.png");
+				}
+				else {
+					this.m_targetSprite[i].setTexture("res/GSMission/Target/Current.png");
+				}
+				this.m_targetSprite[i].setOpacity(this.m_targetAlpha);
+				
+				this.m_targetAngle[i] += TARGET_ROTATE_SPEED * deltaTime;
+				this.m_targetSprite[i].setRotation(this.m_targetAngle[i]);
 			}
 		}
 	}
@@ -278,13 +315,13 @@ g_gsMissionUILayer.Init = function () {
 	
 	this.m_upgradeButton = new BigButton (this, 1, "Research", CANVAS_W * 0.5 - 225, 40, PushUpgrade);
 	this.m_shopButton = new BigButton (this, 1, "Shop", CANVAS_W * 0.5 - 75, 40);
-	this.m_infoButton = new BigButton (this, 1, "Info", CANVAS_W * 0.5 + 75, 40, PushInfo);
+	//this.m_infoButton = new BigButton (this, 1, "Info", CANVAS_W * 0.5 + 75, 40, PushInfo);
 	this.m_backButton = new BigButton (this, 2, "Back", CANVAS_W * 0.5 + 225, 40, this.Back);
 	
 	this.m_buttonList = [];
 	this.m_buttonList.push (this.m_upgradeButton);
 	this.m_buttonList.push (this.m_shopButton);
-	this.m_buttonList.push (this.m_infoButton);
+	//this.m_buttonList.push (this.m_infoButton);
 	this.m_buttonList.push (this.m_backButton);
 }
 

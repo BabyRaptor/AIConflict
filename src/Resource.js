@@ -96,6 +96,9 @@ g_imageList.push ("res/GSMission/Objects/Star.png");
 g_imageList.push ("res/GSMission/Objects/StarGlow.png");
 
 
+g_imageList.push ("res/GSMission/Target/Current.png");
+g_imageList.push ("res/GSMission/Target/Locked.png");
+g_imageList.push ("res/GSMission/Target/Cleared.png");
 for (var i=1; i<=g_campaignData.length; i++) {
 	g_imageList.push ("res/GSMission/Objects/Planet-" + i + ".png");
 }
@@ -107,7 +110,6 @@ for (var i=0; i<g_campaignData.length; i++) {
 		g_fileList.push (g_campaignData[i].m_missionList[j].m_mapPath);
 	}
 }
-
 g_imageList.push ("res/GSMission/Thumbnail/Border.png");
 g_imageList.push ("res/GSMission/Thumbnail/BorderGlow.png");
 g_imageList.push ("res/GSMission/Thumbnail/BorderLock.png");
@@ -153,6 +155,9 @@ g_imageList.push ("res/GSAction/Base/Base-4.png");
 g_imageList.push ("res/GSAction/Base/Base-5.png");
 g_imageList.push ("res/GSAction/Base/Base-6.png");
 g_imageList.push ("res/GSAction/Base/Shield.png");
+
+g_imageList.push ("res/GSAction/Base/Laser.png");
+g_imageList.push ("res/GSAction/Base/LaserTip.png");
 
 
 // Turret

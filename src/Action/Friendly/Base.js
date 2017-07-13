@@ -1,3 +1,6 @@
+var BASE_RANGE = 6;
+var BASE_COOL_DOWN = 5;
+
 function Base(battle, layer) {
 	var BASE_ROTATING_SPEED = 13;
 	var BASE_SHIELD_FADE_SPEED = 500;
@@ -11,8 +14,11 @@ function Base(battle, layer) {
 	this.m_shield = 0;
 	this.m_maxShield = 0;
 	
+	this.m_target = null;
+	
 	var shieldAlpha = 0;
 	var explosionCount = 0;
+	var cooldownCount = 0;
 	
 	this.Init = function () {
 		this.m_sprite = cc.Sprite.create("res/GSAction/Base/Base-1.png");
@@ -31,6 +37,8 @@ function Base(battle, layer) {
 		this.m_maxHP = 100;
 		this.m_shield = 100;
 		this.m_maxShield = 100;
+		
+		this.m_laserBeam = new ProjectileBaseLaser (battle, layer, this);
 	}
 	
 	this.SetPosition = function(x, y) {
@@ -55,7 +63,30 @@ function Base(battle, layer) {
 			if (shieldAlpha < 0) shieldAlpha = 0;
 		}
 		
-		if (this.m_HP <= 0) {
+		if (this.m_HP > 0) {
+			if (cooldownCount > 0) {
+				cooldownCount -= deltaTime;
+			}
+			if (this.m_target == null) {
+				this.ScanForTarget();
+			}
+			else {
+				if (DistanceBetweenTwoPoint (this.m_x, this.m_y, this.m_target.m_x, this.m_target.m_y) > this.GetRange()) {
+					this.m_target = null;
+				}
+				else if (this.m_target.m_live == false) {
+					this.m_target = null;
+				}
+				if (cooldownCount <= 0) {
+					var barrelX = this.m_x;
+					var barrelY = this.m_y;
+					
+					this.m_laserBeam.Show (barrelX, barrelY, this.m_target);
+					cooldownCount += BASE_COOL_DOWN;
+				}
+			}
+		}
+		else {
 			explosionCount += deltaTime;
 			if (explosionCount >= BASE_EXPLOSION_INTERVAL) {
 				explosionCount -= BASE_EXPLOSION_INTERVAL;
@@ -64,6 +95,11 @@ function Base(battle, layer) {
 				battle.SpawnExplosion (EXPLOSION_DEBRIS_BLUE, 0.8, this.m_x + randomX, this.m_y + randomY);
 			}
 		}
+		
+		
+		this.m_laserBeam.Update (deltaTime);
+		
+		
 	}
 	
 	this.UpdateVisual = function () {
@@ -75,6 +111,8 @@ function Base(battle, layer) {
 		
 		this.m_sprite.setRotation(this.m_angle);
 		this.m_shieldSprite.setOpacity (shieldAlpha);
+		
+		this.m_laserBeam.UpdateVisual ();
 	}
 	
 	this.Hit = function (damage) {
@@ -93,6 +131,22 @@ function Base(battle, layer) {
 				}
 			}
 		}
+	}
+	
+	
+	this.ScanForTarget = function() {
+		var currentDistance = 9999;
+		for (var i=0; i<battle.m_enemies.length; i++) {
+			var tempEnemy = battle.m_enemies[i];
+			var tempDistance = DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y);
+			if (tempDistance <= this.GetRange() && tempDistance < currentDistance) {
+				currentDistance = tempDistance;
+				this.m_target = tempEnemy;
+			}
+		}
+	}
+	this.GetRange = function() {
+		return BASE_RANGE;
 	}
 	
 	this.Init();

@@ -106,6 +106,9 @@ g_gsActionUILayer.AddEventListener = function () {
 				g_touchCurrent = touches[0].getLocation();
 			}
 			else if (g_touchCount == 2) {
+				if (touches[1] == null) {
+					g_touchCount = 1;
+				}
 				g_oldDistance = 0;
 			}
 			return true;

@@ -32,8 +32,8 @@ g_campaignData[4].m_mapX = 15;
 g_campaignData[4].m_mapY = 6;
 
 g_campaignData[5] = new CampaignData();
-g_campaignData[5].m_mapX = 14;
-g_campaignData[5].m_mapY = 11;
+g_campaignData[5].m_mapX = 12;
+g_campaignData[5].m_mapY = 9;
 
 g_campaignData[6] = new CampaignData();
 g_campaignData[6].m_mapX = 9;

@@ -92,6 +92,8 @@ function MissionInfo (layer, x, y) {
 	}
 	
 	this.Show = function (c) {
+		if (((g_profile.m_progress / 3) >> 0) < c) return;
+		
 		if (campaign != c) {
 			campaign = c;
 			
@@ -103,9 +105,11 @@ function MissionInfo (layer, x, y) {
 	}
 	
 	this.SwitchMission = function (mission) {
-		if (g_campaignData[campaign].m_missionList[mission].m_locked == false) {
-			selecting = mission;
-			largeThumbnailAlphaDirection = 0;
+		if (g_campaignData[campaign].m_missionList[mission] != null) {
+			if (g_campaignData[campaign].m_missionList[mission].m_locked == false) {
+				selecting = mission;
+				largeThumbnailAlphaDirection = 0;
+			}
 		}
 	}
 	
@@ -115,12 +119,20 @@ function MissionInfo (layer, x, y) {
 	
 	this.RefreshLockStatus = function () {
 		for (var i=0; i<3; i++) {
-			this.m_missionThumbnail[i].setTexture(g_campaignData[campaign].m_missionList[i].m_mapThumbnailSmall);
-			if (g_campaignData[campaign].m_missionList[i].m_locked == true) {
-				this.m_missionBorder[i].setTexture("res/GSMission/Thumbnail/BorderLock.png");
+			if (g_campaignData[campaign].m_missionList[i] != null) {
+				this.m_missionThumbnail[i].setTexture(g_campaignData[campaign].m_missionList[i].m_mapThumbnailSmall);
+				if (g_campaignData[campaign].m_missionList[i].m_locked == true) {
+					this.m_missionBorder[i].setTexture("res/GSMission/Thumbnail/BorderLock.png");
+				}
+				else {
+					this.m_missionBorder[i].setTexture("res/GSMission/Thumbnail/Border.png");
+				}
+				this.m_missionThumbnail[i].setVisible(true);
+				this.m_missionBorder[i].setVisible(true);
 			}
 			else {
-				this.m_missionBorder[i].setTexture("res/GSMission/Thumbnail/Border.png");
+				this.m_missionThumbnail[i].setVisible(false);
+				this.m_missionBorder[i].setVisible(false);
 			}
 		}
 	}

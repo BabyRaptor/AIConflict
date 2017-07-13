@@ -14,14 +14,16 @@ g_gsMenuMainLayer.Init = function () {
 	
 	this.m_startButton = new BigButton (this, 1, "Play", CANVAS_W * 0.5 - 225, 40, PushMission);
 	this.m_upgradeButton = new BigButton (this, 1, "Research", CANVAS_W * 0.5 - 75, 40, PushUpgrade);
-	this.m_shopButton = new BigButton (this, 1, "Shop", CANVAS_W * 0.5 + 75, 40);
-	this.m_infoButton = new BigButton (this, 1, "Info", CANVAS_W * 0.5 + 225, 40, PushInfo);
+	this.m_shopButton = new BigButton (this, 1, "Shop", CANVAS_W * 0.5 + 75, 40, PushShop);
+	this.m_optionButton = new BigButton (this, 1, "Settings", CANVAS_W * 0.5 + 225, 40, PushOption);
+	//this.m_infoButton = new BigButton (this, 1, "Info", CANVAS_W * 0.5 + 225, 40, PushInfo);
 	
 	this.m_buttonList = [];
 	this.m_buttonList.push (this.m_startButton);
 	this.m_buttonList.push (this.m_upgradeButton);
 	this.m_buttonList.push (this.m_shopButton);
-	this.m_buttonList.push (this.m_infoButton);
+	this.m_buttonList.push (this.m_optionButton);
+	//this.m_buttonList.push (this.m_infoButton);
 	
 	this.m_logoSprite = cc.Sprite.create("res/GSMenu/Logo.png");
 	this.m_logoSprite.setAnchorPoint(cc.p(0.5, 0.5));
