@@ -12,36 +12,36 @@ function CampaignData () {
 var g_campaignData = [];
 
 g_campaignData[0] = new CampaignData();
-g_campaignData[0].m_mapX = 7;
-g_campaignData[0].m_mapY = 4;
+g_campaignData[0].m_mapX = -200;
+g_campaignData[0].m_mapY = -150;
 
 g_campaignData[1] = new CampaignData();
-g_campaignData[1].m_mapX = 7;
-g_campaignData[1].m_mapY = 7;
+g_campaignData[1].m_mapX = -150;
+g_campaignData[1].m_mapY = -30;
 
 g_campaignData[2] = new CampaignData();
-g_campaignData[2].m_mapX = 9;
-g_campaignData[2].m_mapY = 5;
+g_campaignData[2].m_mapX = 30;
+g_campaignData[2].m_mapY = -110;
 
 g_campaignData[3] = new CampaignData();
-g_campaignData[3].m_mapX = 13;
-g_campaignData[3].m_mapY = 3;
+g_campaignData[3].m_mapX = 220;
+g_campaignData[3].m_mapY = -180;
 
 g_campaignData[4] = new CampaignData();
-g_campaignData[4].m_mapX = 15;
-g_campaignData[4].m_mapY = 6;
+g_campaignData[4].m_mapX = 350;
+g_campaignData[4].m_mapY = -20;
 
 g_campaignData[5] = new CampaignData();
-g_campaignData[5].m_mapX = 12;
-g_campaignData[5].m_mapY = 9;
+g_campaignData[5].m_mapX = 150;
+g_campaignData[5].m_mapY = 100;
 
 g_campaignData[6] = new CampaignData();
-g_campaignData[6].m_mapX = 9;
-g_campaignData[6].m_mapY = 12;
+g_campaignData[6].m_mapX = 70;
+g_campaignData[6].m_mapY = 280;
 
 g_campaignData[7] = new CampaignData();
-g_campaignData[7].m_mapX = 5;
-g_campaignData[7].m_mapY = 10;
+g_campaignData[7].m_mapX = -300;
+g_campaignData[7].m_mapY = 180;
 
 
 function MissionData () {

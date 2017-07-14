@@ -236,7 +236,6 @@ function MissionInfo (layer, x, y) {
 	
 	this.Close = function () {
 		instance.m_showing = false;
-		g_gsMissionHexLayer.Deselect();
 	}
 	
 	this.Init();
