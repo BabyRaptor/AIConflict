@@ -39,9 +39,9 @@ g_gsMissionBGLayer.Reset = function () {
 }
 
 g_gsMissionBGLayer.update = function (deltaTime) {
-	var speed = 1 - this.m_starMapScale;
-	if (speed > 0.5) speed = 0.5;
-	if (speed < 0.25) speed = 0.25;
+	var speed = 1.2 - this.m_starMapScale;
+	if (speed > 0.6) speed = 0.6;
+	if (speed < 0.2) speed = 0.2;
 	
 	this.m_starMapScale += deltaTime * speed;
 	if (this.m_starMapScale > 1) {
@@ -128,6 +128,7 @@ function CreateStarMapLayer() {
 	}
 
 	g_gsMissionStarMapLayer.Reset = function () {
+		this.m_targetAlpha = 0;
 		this.m_targetSprite.setOpacity(0);
 	}
 
@@ -194,7 +195,7 @@ g_gsMissionUILayer.Init = function () {
 	
 	
 	this.m_upgradeButton = new BigButton (this, 1, "Research", CANVAS_W * 0.5 - 225, 40, PushUpgrade);
-	this.m_shopButton = new BigButton (this, 1, "Shop", CANVAS_W * 0.5 - 75, 40);
+	this.m_shopButton = new BigButton (this, 1, "Shop", CANVAS_W * 0.5 - 75, 40, PushShop);
 	//this.m_infoButton = new BigButton (this, 1, "Info", CANVAS_W * 0.5 + 75, 40, PushInfo);
 	this.m_backButton = new BigButton (this, 2, "Back", CANVAS_W * 0.5 + 225, 40, this.Back);
 	

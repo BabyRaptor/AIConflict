@@ -21,69 +21,88 @@ g_gsUpgradeMainLayer.Init = function () {
 	this.m_buttonList.push (this.m_backButton);
 	
 	
-	this.m_rightSubPanel = new SmallPanel(this, 1, CANVAS_W * 0.5 + 175, CANVAS_H * 0.5 + 50, 10, 11);
+	this.m_basicPanel = new SmallPanel(this, 1, CANVAS_W * 0.5, CANVAS_H * 0.5 + 135, 17, 9);
 	
+	this.m_basicLabel = new cc.LabelTTF(" Basic research ", GetFont("Nasalization"), 32, cc.size(500, 0));
+	this.m_basicLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	this.m_basicLabel.setPosition (cc.p(CANVAS_W * 0.5 - 120, CANVAS_H * 0.5 + 300));
+	this.m_basicLabel.setLocalZOrder (LAYER_UI);
+	this.m_basicLabel.enableStroke (new cc.Color(16, 173, 255, 0.5), 1);
+	this.m_basicLabel.enableShadow (new cc.Color(100, 220, 255, 255), cc.size(0, 0), 15);
+	this.addChild(this.m_basicLabel);
 	
+	//this.m_advancePanel = new SmallPanel(this, 1, CANVAS_W * 0.5, CANVAS_H * 0.5 + 30, 17, 5);
 	
-	this.m_areaLabel = new cc.LabelTTF(" Research Area", GetFont("Nasalization"), 32, cc.size(500, 0));
-	this.m_areaLabel.setAnchorPoint(cc.p(0.5, 0.5));
-	this.m_areaLabel.setPosition (cc.p(CANVAS_W * 0.5 - 138, CANVAS_H * 0.5 + 300));
-	this.m_areaLabel.setLocalZOrder (LAYER_UI);
-	this.m_areaLabel.enableStroke (new cc.Color(16, 173, 255, 0.5), 1);
-	this.m_areaLabel.enableShadow (new cc.Color(100, 220, 255, 255), cc.size(0, 0), 15);
-	this.addChild(this.m_areaLabel);
+	this.m_advanceLabel = new cc.LabelTTF(" Advanced research ", GetFont("Nasalization"), 32, cc.size(500, 0));
+	this.m_advanceLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	this.m_advanceLabel.setPosition (cc.p(CANVAS_W * 0.5 - 120, CANVAS_H * 0.5 + 150));
+	this.m_advanceLabel.setLocalZOrder (LAYER_UI);
+	this.m_advanceLabel.enableStroke (new cc.Color(16, 173, 255, 0.5), 1);
+	this.m_advanceLabel.enableShadow (new cc.Color(100, 220, 255, 255), cc.size(0, 0), 15);
+	this.addChild(this.m_advanceLabel);
 	
 	
 	
 	this.m_upgradeButtonList = [];
+	var basicIndex = 0;
+	var advancedIndex = 0;
 	for (var i=0; i<g_upgrade.length; i++) {
-		this.m_upgradeButtonList.push (new UpgradeButton(this, g_upgrade[i].m_iconPathE, g_upgrade[i].m_iconPathD, g_upgrade[i].m_iconPathU, 0, 0, this.SelectUpgrade, i));
-		this.m_upgradeButtonList[i].SetPosition(CANVAS_W * 0.5 - 380 + (i % 4) * 83, CANVAS_H * 0.5 + 220 - ((i / 4) >> 0) * 83);
+		if (g_upgrade[i].m_isAdvance == false) {
+			this.m_upgradeButtonList.push (new UpgradeButton(this, g_upgrade[i].m_iconPathE, g_upgrade[i].m_iconPathD, g_upgrade[i].m_iconPathU, 0, 0, this.SelectUpgrade, i));
+			this.m_upgradeButtonList[i].SetPosition(CANVAS_W * 0.5 - 330 + (basicIndex % 9) * 83, CANVAS_H * 0.5 + 230 - ((basicIndex / 9) >> 0) * 83);
+			basicIndex ++;
+		}
+		else {
+			this.m_upgradeButtonList.push (new UpgradeButton(this, g_upgrade[i].m_iconPathE, g_upgrade[i].m_iconPathD, g_upgrade[i].m_iconPathU, 0, 0, this.SelectUpgrade, i));
+			this.m_upgradeButtonList[i].SetPosition(CANVAS_W * 0.5 - 330 + (advancedIndex % 9) * 83, CANVAS_H * 0.5 + 80 - ((advancedIndex / 9) >> 0) * 83 );
+			advancedIndex ++;
+		}
 	}
 	
 	
 	
 	this.m_upgradeTitleLabel = new cc.LabelTTF("Monitization", GetFont("Nasalization"), 28);
-	this.m_upgradeTitleLabel.setAnchorPoint(cc.p(0.5, 0.5));
-	this.m_upgradeTitleLabel.setPosition (cc.p(CANVAS_W * 0.5 + 175, CANVAS_H * 0.5 + 280));
+	this.m_upgradeTitleLabel.setAnchorPoint(cc.p(0, 1));
+	this.m_upgradeTitleLabel.setPosition (cc.p(CANVAS_W * 0.5 - 410, CANVAS_H * 0.5 - 90));
 	this.m_upgradeTitleLabel.setLocalZOrder (LAYER_UI);
 	this.m_upgradeTitleLabel.setOpacity(0);
 	this.addChild(this.m_upgradeTitleLabel);
 	
-	this.m_upgradeDescriptionLabel = new cc.LabelTTF("Nothing", GetFont("Nasalization"), 16, cc.size(450, 0));
+	this.m_upgradeDescriptionLabel = new cc.LabelTTF("Nothing", GetFont("Nasalization"), 16, cc.size(600, 0));
 	this.m_upgradeDescriptionLabel.setAnchorPoint(cc.p(0, 1));
-	this.m_upgradeDescriptionLabel.setPosition (cc.p(CANVAS_W * 0.5 - 50, CANVAS_H * 0.5 + 220));
+	this.m_upgradeDescriptionLabel.setPosition (cc.p(CANVAS_W * 0.5 - 410, CANVAS_H * 0.5 - 130));
 	this.m_upgradeDescriptionLabel.setLocalZOrder (LAYER_UI);
+	this.m_upgradeDescriptionLabel.setColor(new cc.Color(192, 192, 192, 0.5));
 	this.m_upgradeDescriptionLabel.setOpacity(0);
 	this.addChild(this.m_upgradeDescriptionLabel);
 	
 	this.m_upgradeCostTitleLabel = new cc.LabelTTF("Cost: ", GetFont("Nasalization"), 18);
 	this.m_upgradeCostTitleLabel.setAnchorPoint(cc.p(0, 1));
-	this.m_upgradeCostTitleLabel.setPosition (cc.p(CANVAS_W * 0.5 - 25, CANVAS_H * 0.5 - 150));
+	this.m_upgradeCostTitleLabel.setPosition (cc.p(CANVAS_W * 0.5 + 255, CANVAS_H * 0.5 - 100));
 	this.m_upgradeCostTitleLabel.setLocalZOrder (LAYER_UI);
 	this.m_upgradeCostTitleLabel.setOpacity(0);
 	this.addChild(this.m_upgradeCostTitleLabel);
 	
 	this.m_upgradeCostLabel = new cc.LabelTTF("0", GetFont("Nasalization"), 18);
 	this.m_upgradeCostLabel.setAnchorPoint(cc.p(1, 1));
-	this.m_upgradeCostLabel.setPosition (cc.p(CANVAS_W * 0.5 + 200, CANVAS_H * 0.5 - 150));
+	this.m_upgradeCostLabel.setPosition (cc.p(CANVAS_W * 0.5 + 415, CANVAS_H * 0.5 - 100));
 	this.m_upgradeCostLabel.setLocalZOrder (LAYER_UI);
 	this.m_upgradeCostLabel.setOpacity(0);
 	this.addChild(this.m_upgradeCostLabel);
 	
 	this.m_creditTitleLabel = new cc.LabelTTF("Credit: ", GetFont("Nasalization"), 18);
 	this.m_creditTitleLabel.setAnchorPoint(cc.p(0, 1));
-	this.m_creditTitleLabel.setPosition (cc.p(CANVAS_W * 0.5 - 25, CANVAS_H * 0.5 - 175));
+	this.m_creditTitleLabel.setPosition (cc.p(CANVAS_W * 0.5 + 255, CANVAS_H * 0.5 - 125));
 	this.m_creditTitleLabel.setLocalZOrder (LAYER_UI);
 	this.addChild(this.m_creditTitleLabel);
 	
 	this.m_creditLabel = new cc.LabelTTF("0", GetFont("Nasalization"), 18);
 	this.m_creditLabel.setAnchorPoint(cc.p(1, 1));
-	this.m_creditLabel.setPosition (cc.p(CANVAS_W * 0.5 + 200, CANVAS_H * 0.5 - 175));
+	this.m_creditLabel.setPosition (cc.p(CANVAS_W * 0.5 + 415, CANVAS_H * 0.5 - 125));
 	this.m_creditLabel.setLocalZOrder (LAYER_UI);
 	this.addChild(this.m_creditLabel);
 	
-	this.m_upgradeButton = new BigButton (this, 1, "Research", CANVAS_W * 0.5 + 320, 190, this.Upgrade);
+	this.m_upgradeButton = new BigButton (this, 1, "Research", CANVAS_W * 0.5 + 345, 165, this.Upgrade);
 	this.m_buttonList.push (this.m_upgradeButton);
 	
 	this.m_textAlpha = 0;
