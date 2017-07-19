@@ -120,7 +120,7 @@ tempUpgrade.m_price = 2000;
 tempUpgrade.m_iconPathE = "res/GSUpgrade/Enable/Manufacture.png";
 tempUpgrade.m_iconPathD = "res/GSUpgrade/Disabled/Manufacture.png";
 tempUpgrade.m_iconPathU = "res/GSUpgrade/Upgraded/Manufacture.png";
-tempUpgrade.m_description = 	"GATLING: -25% cost (both constructing and upgrading cost)." + "\n" + 
+tempUpgrade.m_description = 	"GATLING: -25% cost (construct and upgrade cost)." + "\n" + 
 								"CANNON: +20% fire rate." + "\n" + 
 								"MISSILE: +100% turn rate";
 tempUpgrade.m_isAdvance = true;

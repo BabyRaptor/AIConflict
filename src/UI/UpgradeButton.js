@@ -2,6 +2,7 @@ var UPGRADE_BUTTON_ENABLE = 1;
 var UPGRADE_BUTTON_DISABLED = 2;
 var UPGRADE_BUTTON_UPGRADED = 3;
 
+
 function UpgradeButton(layer, iconE, iconD, iconU, x, y, callback, param) {
 	var instance = this;
 	
@@ -18,21 +19,46 @@ function UpgradeButton(layer, iconE, iconD, iconU, x, y, callback, param) {
 	this.m_buttonSprite.setLocalZOrder (LAYER_UI);
 	layer.addChild(this.m_buttonSprite);
 	
+	this.m_buttonHighlightSprite = new cc.Sprite("res/UI/UpgradeButton/Highlight.png");
+	this.m_buttonHighlightSprite.setAnchorPoint(cc.p(0.5, 0.5));
+	this.m_buttonHighlightSprite.setPosition (cc.p(x, y));
+	this.m_buttonHighlightSprite.setLocalZOrder (LAYER_UI);
+	this.m_buttonHighlightSprite.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
+	this.m_buttonHighlightSprite.setOpacity(0);
+	layer.addChild(this.m_buttonHighlightSprite);
+	
 	this.m_iconSprite = new cc.Sprite(iconE);
 	this.m_iconSprite.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_iconSprite.setPosition (cc.p(x, y));
 	this.m_iconSprite.setLocalZOrder (LAYER_UI);
 	layer.addChild(this.m_iconSprite);
 	
+	var highlighting = false;
+	var highlightAlpha = 0;
+	var actualAlpha = 0;
+	
 	this.SetPosition = function (x, y) {
 		this.m_x = x;
 		this.m_y = y;
 		
 		this.m_buttonSprite.setPosition (cc.p(x, y));
+		this.m_buttonHighlightSprite.setPosition (cc.p(x, y));
 		this.m_iconSprite.setPosition (cc.p(x, y));
 	}
 	this.Update = function (deltaTime) {
-		
+		if (highlighting) {
+			highlightAlpha += 3 * deltaTime;
+			if (highlightAlpha > 6.28) {
+				highlightAlpha = 0;
+			}
+			actualAlpha = Math.sin (highlightAlpha);
+			if (actualAlpha < 0) actualAlpha *= -1;
+		}
+		else {
+			actualAlpha -= deltaTime;
+			if (actualAlpha < 0) actualAlpha = 0;
+		}
+		this.m_buttonHighlightSprite.setOpacity(actualAlpha * 255);
 	}
 	
 	this.SetEnable = function (enable) {
@@ -62,6 +88,10 @@ function UpgradeButton(layer, iconE, iconD, iconU, x, y, callback, param) {
 		else if (this.m_status == UPGRADE_BUTTON_UPGRADED) {
 			this.m_iconSprite.setTexture(iconU)
 		}
+	}
+	
+	this.SetHighlight = function(highlight) {
+		highlighting = highlight;
 	}
 	
 	this.AddEventListener = function() {

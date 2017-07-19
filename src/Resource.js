@@ -81,6 +81,7 @@ g_imageList.push ("res/UI/UpgradeButton/Up-2.png");
 g_imageList.push ("res/UI/UpgradeButton/Down-2.png");
 g_imageList.push ("res/UI/UpgradeButton/Up-3.png");
 g_imageList.push ("res/UI/UpgradeButton/Down-3.png");
+g_imageList.push ("res/UI/UpgradeButton/Highlight.png");
 
 g_imageList.push ("res/UI/PowerBar/PowerBar.png");
 g_imageList.push ("res/UI/PowerBar/PowerBarContent.png");
