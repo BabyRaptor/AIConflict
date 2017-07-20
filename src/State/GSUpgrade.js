@@ -21,6 +21,19 @@ g_gsUpgradeMainLayer.Init = function () {
 	this.m_buttonList.push (this.m_backButton);
 	
 	
+	this.m_moneyBar = cc.Sprite.create("res/UI/BigMoneyBar.png");
+	this.m_moneyBar.setAnchorPoint(cc.p(1, 1));
+	this.m_moneyBar.setPosition(cc.p(CANVAS_W * 0.5 + 404, CANVAS_H * 0.5 + 353));
+	this.m_moneyBar.setLocalZOrder (LAYER_UI + 1);
+	this.addChild(this.m_moneyBar);
+		
+	this.m_moneyLabel = new cc.LabelTTF("1000000", GetFont("Nasalization"), 18);
+	this.m_moneyLabel.setAnchorPoint(cc.p(1, 1));
+	this.m_moneyLabel.setPosition (cc.p(CANVAS_W * 0.5 + 393, CANVAS_H * 0.5 + 344));
+	this.m_moneyLabel.setLocalZOrder (LAYER_UI + 1);
+	this.addChild(this.m_moneyLabel);
+	
+	
 	this.m_upgradePanel = new SmallPanel(this, 1, CANVAS_W * 0.5, CANVAS_H * 0.5 + 220, 17, 10);
 	
 	this.m_basicLabel = new cc.LabelTTF(" Basic research ", GetFont("Nasalization"), 32, cc.size(500, 50));
@@ -57,7 +70,7 @@ g_gsUpgradeMainLayer.Init = function () {
 		}
 	}
 	
-	this.m_upgradeInfoPanel = new SmallPanel(this, 1, CANVAS_W * 0.5 - 125, CANVAS_H * 0.5 - 127, 12, 4);
+	this.m_upgradeInfoPanel = new SmallPanel(this, 1, CANVAS_W * 0.5 - 100, CANVAS_H * 0.5 - 127, 13, 4);
 	
 	this.m_upgradeTitleLabel = new cc.LabelTTF("Monitization", GetFont("Nasalization"), 28, cc.size(500, 50));
 	this.m_upgradeTitleLabel.setAnchorPoint(cc.p(0, 1));
@@ -68,7 +81,7 @@ g_gsUpgradeMainLayer.Init = function () {
 	this.m_upgradeTitleLabel.setOpacity(0);
 	this.addChild(this.m_upgradeTitleLabel);
 	
-	this.m_upgradeDescriptionLabel = new cc.LabelTTF("Nothing", GetFont("Nasalization"), 16, cc.size(550, 0));
+	this.m_upgradeDescriptionLabel = new cc.LabelTTF("Nothing", GetFont("Nasalization"), 16, cc.size(600, 0));
 	this.m_upgradeDescriptionLabel.setAnchorPoint(cc.p(0, 1));
 	this.m_upgradeDescriptionLabel.setPosition (cc.p(CANVAS_W * 0.5 - 393, CANVAS_H * 0.5 - 100));
 	this.m_upgradeDescriptionLabel.setLocalZOrder (LAYER_UI);
@@ -77,35 +90,38 @@ g_gsUpgradeMainLayer.Init = function () {
 	this.addChild(this.m_upgradeDescriptionLabel);
 	
 	
-	this.m_upgradeButtonPanel = new SmallPanel(this, 1, CANVAS_W * 0.5 + 300, CANVAS_H * 0.5 - 127, 5, 4);
+	this.m_upgradeButtonPanel = new SmallPanel(this, 1, CANVAS_W * 0.5 + 325, CANVAS_H * 0.5 - 127, 4, 4);
 	
-	this.m_upgradeCostTitleLabel = new cc.LabelTTF("Cost: ", GetFont("Nasalization"), 18);
-	this.m_upgradeCostTitleLabel.setAnchorPoint(cc.p(0, 1));
-	this.m_upgradeCostTitleLabel.setPosition (cc.p(CANVAS_W * 0.5 + 200, CANVAS_H * 0.5 - 75));
+	this.m_upgradeCostTitleLabel = new cc.LabelTTF("COST", GetFont("Nasalization"), 18);
+	this.m_upgradeCostTitleLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	this.m_upgradeCostTitleLabel.setPosition (cc.p(CANVAS_W * 0.5 + 325, CANVAS_H * 0.5 - 62));
 	this.m_upgradeCostTitleLabel.setLocalZOrder (LAYER_UI);
-	this.m_upgradeCostTitleLabel.setOpacity(0);
+	this.m_upgradeCostTitleLabel.enableShadow (new cc.Color(100, 220, 255, 255), cc.size(0, 0), 5);
 	this.addChild(this.m_upgradeCostTitleLabel);
 	
+	this.m_costBar = cc.Sprite.create("res/GSAction/UI/MoneyBar.png");
+	this.m_costBar.setAnchorPoint(cc.p(0.5, 0.5));
+	this.m_costBar.setPosition(cc.p(CANVAS_W * 0.5 + 325, CANVAS_H * 0.5 - 100));
+	this.m_costBar.setLocalZOrder (LAYER_UI);
+	this.addChild(this.m_costBar);
+	
 	this.m_upgradeCostLabel = new cc.LabelTTF("0", GetFont("Nasalization"), 18);
-	this.m_upgradeCostLabel.setAnchorPoint(cc.p(1, 1));
-	this.m_upgradeCostLabel.setPosition (cc.p(CANVAS_W * 0.5 + 400, CANVAS_H * 0.5 - 75));
+	this.m_upgradeCostLabel.setAnchorPoint(cc.p(1, 0.5));
+	this.m_upgradeCostLabel.setPosition (cc.p(CANVAS_W * 0.5 + 385, CANVAS_H * 0.5 - 100));
 	this.m_upgradeCostLabel.setLocalZOrder (LAYER_UI);
 	this.m_upgradeCostLabel.setOpacity(0);
 	this.addChild(this.m_upgradeCostLabel);
 	
-	this.m_creditTitleLabel = new cc.LabelTTF("Credit: ", GetFont("Nasalization"), 18);
-	this.m_creditTitleLabel.setAnchorPoint(cc.p(0, 1));
-	this.m_creditTitleLabel.setPosition (cc.p(CANVAS_W * 0.5 + 200, CANVAS_H * 0.5 - 100));
-	this.m_creditTitleLabel.setLocalZOrder (LAYER_UI);
-	this.addChild(this.m_creditTitleLabel);
 	
-	this.m_creditLabel = new cc.LabelTTF("0", GetFont("Nasalization"), 18);
-	this.m_creditLabel.setAnchorPoint(cc.p(1, 1));
-	this.m_creditLabel.setPosition (cc.p(CANVAS_W * 0.5 + 400, CANVAS_H * 0.5 - 100));
-	this.m_creditLabel.setLocalZOrder (LAYER_UI);
-	this.addChild(this.m_creditLabel);
+	this.m_seperatorLabel = new cc.LabelTTF("  _______________  ", GetFont("Nasalization"), 18);
+	this.m_seperatorLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	this.m_seperatorLabel.setPosition (cc.p(CANVAS_W * 0.5 + 325, CANVAS_H * 0.5 - 125));
+	this.m_seperatorLabel.setLocalZOrder (LAYER_UI);
+	this.m_seperatorLabel.setColor (new cc.Color(200, 240, 255, 255));
+	this.m_seperatorLabel.enableShadow (new cc.Color(150, 220, 255, 255), cc.size(0, 0), 15);
+	this.addChild(this.m_seperatorLabel);
 	
-	this.m_upgradeButton = new BigButton (this, 1, "Research", CANVAS_W * 0.5 + 302, 183, this.Upgrade);
+	this.m_upgradeButton = new BigButton (this, 1, "Research", CANVAS_W * 0.5 + 327, 185, this.Upgrade);
 	this.m_buttonList.push (this.m_upgradeButton);
 	
 	this.m_textAlpha = 0;
@@ -188,10 +204,9 @@ g_gsUpgradeMainLayer.update = function (deltaTime) {
 	
 	this.m_upgradeTitleLabel.setOpacity(this.m_textAlpha);
 	this.m_upgradeDescriptionLabel.setOpacity(this.m_textAlpha);
-	this.m_upgradeCostTitleLabel.setOpacity(this.m_textAlpha);
 	this.m_upgradeCostLabel.setOpacity(this.m_textAlpha);
 	
-	this.m_creditLabel.setString (g_profile.m_money);
+	this.m_moneyLabel.setString (g_profile.m_money);
 	
 	for (var i=0; i<g_gsUpgradeMainLayer.m_upgradeButtonList.length; i++) {
 		g_gsUpgradeMainLayer.m_upgradeButtonList[i].Update(deltaTime);

@@ -86,6 +86,8 @@ g_imageList.push ("res/UI/UpgradeButton/Highlight.png");
 g_imageList.push ("res/UI/PowerBar/PowerBar.png");
 g_imageList.push ("res/UI/PowerBar/PowerBarContent.png");
 
+g_imageList.push ("res/UI/BigMoneyBar.png");
+
 
 // Mission
 g_imageList.push ("res/GSMission/StarMapLayer1.jpg");
