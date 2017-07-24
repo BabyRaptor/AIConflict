@@ -223,15 +223,18 @@ g_imageList.push ("res/GSAction/Turret/StunIcon.png");
 
 // Enemy
 g_imageList.push ("res/GSAction/Enemy/HPBar.png");
-for (var i=1; i<=5; i++) {
-	g_imageList.push ("res/GSAction/Enemy/Area-1/" + i + ".png");
-}
-for (var i=1; i<=1; i++) {
-	g_imageList.push ("res/GSAction/EnemyProjectile/" + i + ".png");
-}
-for (var i=1; i<=1; i++) {
-	g_imageList.push ("res/GSAction/EnemySkill/" + i + ".png");
-}
+// Ship
+g_imageList.push ("res/GSAction/Enemy/Area-1/1.png");
+g_imageList.push ("res/GSAction/Enemy/Area-1/2.png");
+g_imageList.push ("res/GSAction/Enemy/Area-1/3.png");
+g_imageList.push ("res/GSAction/Enemy/Area-1/4.png");
+g_imageList.push ("res/GSAction/Enemy/Area-1/5.png");
+g_imageList.push ("res/GSAction/Enemy/Area-1/6.png");
+// Projectile
+g_imageList.push ("res/GSAction/Enemy/Area-1/Gatling.png");
+// Skill
+g_imageList.push ("res/GSAction/Enemy/Area-1/Heal.png");
+
 
 // Explosion
 for (var i=1; i<=8; i++) {

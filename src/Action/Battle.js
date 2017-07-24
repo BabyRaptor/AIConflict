@@ -278,15 +278,12 @@ function Battle(bgLayer, layer, campaignID, missionID) {
 	}
 	
 	this.SpawnEnemy = function (area, type, modifier) {
-		var tempEnemy = new Enemy(this, layer, area, type, this.m_path, modifier);
+		var tempEnemy = CreateEnemy[area][type](this, layer, this.m_path, modifier);
 		this.m_enemies.push (tempEnemy);
 	}
 	
-	this.SpawnEnemyProjectile = function (type, x, y, angle, damage, speed) {
-		var tempProjectile;
-		if (type == ENEMY_PROJECTILE_RED_LASER) {
-			tempProjectile = new EnemyProjectile(this, layer, type, x, y, angle, damage, speed);
-		}
+	this.SpawnEnemyProjectile = function (type, x, y, angle) {
+		tempProjectile = new EnemyProjectile(this, layer, type, x, y, angle);
 		this.m_projectiles.push (tempProjectile);
 	}
 	
