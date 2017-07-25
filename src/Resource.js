@@ -232,6 +232,8 @@ g_imageList.push ("res/GSAction/Enemy/Area-1/5.png");
 g_imageList.push ("res/GSAction/Enemy/Area-1/6.png");
 // Projectile
 g_imageList.push ("res/GSAction/Enemy/Area-1/Gatling.png");
+g_imageList.push ("res/GSAction/Enemy/Area-1/Laser.png");
+g_imageList.push ("res/GSAction/Enemy/Area-1/LaserTip.png");
 // Skill
 g_imageList.push ("res/GSAction/Enemy/Area-1/Heal.png");
 

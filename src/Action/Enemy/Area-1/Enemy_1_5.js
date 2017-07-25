@@ -1,19 +1,18 @@
-CreateEnemy[1][2] = function (battle, layer, path, modifier) {
+CreateEnemy[1][5] = function (battle, layer, path, modifier) {
 	// Constant for this enemy
 	// Common stuff
 	var ENEMY_AREA 					= 1;
-	var ENEMY_TYPE 					= 2;
-	var ENEMY_BOUNTY				= 5;
-	var ENEMY_SIZE					= 0.6;
+	var ENEMY_TYPE 					= 5;
+	var ENEMY_BOUNTY				= 70;
+	var ENEMY_SIZE					= 1.2;
 	// Properties
-	var ENEMY_HP					= 200;
-	var ENEMY_ARMOR					= 0.3;
-	var ENEMY_MOVE_SPEED 			= 1.2;
-	var ENEMY_ROTATE_SPEED 			= 35;
+	var ENEMY_HP					= 2000;
+	var ENEMY_ARMOR					= 0;
+	var ENEMY_MOVE_SPEED 			= 1;
+	var ENEMY_ROTATE_SPEED 			= 30;
 	// Attack
-	var ENEMY_ACCURACY 				= 10;
-	var ENEMY_COOLDOWN				= 1;
-	var ENEMY_PROJECTILE_TYPE 		= ENEMY_PROJECTILE_RED_GATLING;
+	var ENEMY_DAMAGE_PER_SECOND		= 15;
+	var ENEMY_BARREL_DISTANCE 		= 1;
 	
 	
 	// Create and init the enemy prototype
@@ -31,7 +30,6 @@ CreateEnemy[1][2] = function (battle, layer, path, modifier) {
 	
 	// Some variable used only by this enemy
 	var targetIndex			= 1;
-	var cooldownCount 		= 0;
 	
 	// The main sprite
 	enemy.m_sprite = GetFromPool("res/GSAction/Enemy/Area-" + ENEMY_AREA  + "/" + ENEMY_TYPE + ".png");
@@ -40,6 +38,9 @@ CreateEnemy[1][2] = function (battle, layer, path, modifier) {
 	enemy.m_sprite.setRotation(enemy.m_angle);
 	enemy.m_sprite.setPosition (cc.p(0, 0));
 	layer.addChild(enemy.m_sprite);
+	
+	// Laser beam!
+	enemy.m_laserBeam = new EnemyLaser (battle, layer, ENEMY_AREA, enemy);
 	
 	// Update function. This is the must for all enemy
 	enemy.Update = function (deltaTime) {
@@ -105,18 +106,21 @@ CreateEnemy[1][2] = function (battle, layer, path, modifier) {
 				}
 				else if (this.m_command == COMMAND_ATTACK_TARGET) {
 					if (this.m_angle == targetAngle) {
-						if (cooldownCount >= ENEMY_COOLDOWN) {
-							cooldownCount -= ENEMY_COOLDOWN;
-							this.Shoot();
-						}
+						var barrelX = this.m_x + ENEMY_BARREL_DISTANCE * Math.sin(this.m_angle * DEG_TO_RAD);
+						var barrelY = this.m_y + ENEMY_BARREL_DISTANCE * Math.cos(this.m_angle * DEG_TO_RAD);
+						
+						this.m_laserBeam.Show (barrelX, barrelY, battle.m_base);
+						battle.m_base.Hit (ENEMY_DAMAGE_PER_SECOND * deltaTime);
 					}
+				}
+				
+				
+				if (this.m_disarmed <= 0) {
+					
 				}
 			}
 			
-			// Count rate of fire
-			if (cooldownCount < ENEMY_COOLDOWN) {
-				cooldownCount += deltaTime;
-			}
+			this.m_laserBeam.Update (deltaTime);
 		}
 	}
 	
@@ -129,22 +133,19 @@ CreateEnemy[1][2] = function (battle, layer, path, modifier) {
 			this.m_sprite.setPosition (cc.p(spriteX, spriteY));
 			
 			this.UpdateHPBar(spriteX, spriteY);
-		}
-	}
-	
-	// Shoot function
-	enemy.Shoot = function () {
-		if (this.m_disarmed <= 0) {
-			var randomizeAngle = ENEMY_ACCURACY - Math.random() * ENEMY_ACCURACY * 2;
-			battle.SpawnEnemyProjectile (ENEMY_PROJECTILE_TYPE, this.m_x, this.m_y, this.m_angle + randomizeAngle);
+			
+			this.m_laserBeam.UpdateVisual ();
 		}
 	}
 	
 	// Destroy
 	enemy.Destroy = function () {
-		battle.SpawnExplosion (EXPLOSION_DEBRIS, 1.2, this.m_x, this.m_y);
+		battle.SpawnExplosion (EXPLOSION_DEBRIS, 1.8, this.m_x, this.m_y);
 		layer.removeChild(this.m_sprite);
 		PutIntoPool(this.m_sprite);
+		
+		this.m_laserBeam.Hide();
+		this.m_laserBeam.Destroy();
 	}
 	
 	return enemy;

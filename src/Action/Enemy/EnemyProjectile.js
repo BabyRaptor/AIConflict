@@ -11,7 +11,7 @@ function EnemyProjectile(battle, layer, type, x, y, angle) {
 	var spriteX = (this.m_x + 0.5) * BLOCK_SIZE - battle.m_mapRealWidth * 0.5;
 	var spriteY = (this.m_y + 0.5) * BLOCK_SIZE - battle.m_mapRealHeight * 0.5;
 	
-	if (ENEMY_PROJECTILE_RED_GATLING) {
+	if (type == ENEMY_PROJECTILE_RED_GATLING) {
 		this.m_damage = 5;
 		this.m_speed = 10;
 		this.m_sprite = GetFromPool("res/GSAction/Enemy/Area-1/Gatling.png");

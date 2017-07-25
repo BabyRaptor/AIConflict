@@ -18,7 +18,10 @@ CreateEnemy[1][3] = function (battle, layer, path, modifier) {
 	
 	// Create and init the enemy prototype
 	var enemy = CreateEnemyPrototype (battle, layer);
+	enemy.m_moveSpeed = ENEMY_MOVE_SPEED;
+	enemy.m_rotateSpeed = ENEMY_ROTATE_SPEED;
 	enemy.Init(path, ENEMY_SIZE, modifier);
+	
 	
 	// Some variable belong to the prototype
 	enemy.m_HP 				= (ENEMY_HP * modifier) >> 0;
@@ -41,69 +44,71 @@ CreateEnemy[1][3] = function (battle, layer, path, modifier) {
 	// Update function. This is the must for all enemy
 	enemy.Update = function (deltaTime) {
 		if (this.m_live == true) {
-			// Rotate to the next target
-			targetAngle = AngleBetweenTwoPoint(this.m_x, this.m_y, this.m_target.x, this.m_target.y);
-			var rotateAmount = ENEMY_ROTATE_SPEED * deltaTime;
-			if (Math.abs(targetAngle - this.m_angle) <= 180) {
-				if (targetAngle > this.m_angle + rotateAmount) {
-					this.m_angle += rotateAmount;
-				}
-				else if (targetAngle < this.m_angle - rotateAmount) {
-					this.m_angle -= rotateAmount;
-				}
-				else {
-					this.m_angle = targetAngle;
-				}
-			}
-			else {
-				if (targetAngle > this.m_angle) this.m_angle -= rotateAmount;
-				else if (targetAngle < this.m_angle) this.m_angle += rotateAmount;
-			}
-			// Correct the angle
-			if (this.m_angle > 360) this.m_angle -= 360;
-			if (this.m_angle < 0) this.m_angle += 360;
-			
-			
-			
-			// Process movement
-			if (this.m_command == COMMAND_FOLLOW_WAYPOINT) {
-				// Floow the waypoint that lead to the base
-				this.m_x += ENEMY_MOVE_SPEED * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD);
-				this.m_y += ENEMY_MOVE_SPEED * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD);
-				
-				if (Math.abs(this.m_x - this.m_target.x) < 2 && Math.abs(this.m_y - this.m_target.y) < 2) {
-					targetIndex ++;
-					if (targetIndex < this.m_path.length) {
-						this.m_target = this.m_path[targetIndex];
+			if (this.m_stunned <= 0) {
+				// Rotate to the next target
+				targetAngle = AngleBetweenTwoPoint(this.m_x, this.m_y, this.m_target.x, this.m_target.y);
+				var rotateAmount = this.GetRotateSpeed() * deltaTime;
+				if (Math.abs(targetAngle - this.m_angle) <= 180) {
+					if (targetAngle > this.m_angle + rotateAmount) {
+						this.m_angle += rotateAmount;
+					}
+					else if (targetAngle < this.m_angle - rotateAmount) {
+						this.m_angle -= rotateAmount;
 					}
 					else {
-						var decisionAngle = Math.random() * 360;
-						var targetX = battle.m_base.m_x + 3 * Math.sin(decisionAngle * DEG_TO_RAD);
-						var targetY = battle.m_base.m_y + 3 * Math.cos(decisionAngle * DEG_TO_RAD);
-						
-						this.m_target = cc.p(targetX, targetY);
-						this.m_command = COMMAND_MOVE_TO_TARGET;
+						this.m_angle = targetAngle;
 					}
 				}
-			}
-			else if (this.m_command == COMMAND_MOVE_TO_TARGET) {
-				var speedMultiplier = DistanceBetweenTwoPoint (this.m_x, this.m_y, this.m_target.x, this.m_target.y) / 6;
-				if (speedMultiplier > 0.7) speedMultiplier = 0.7;
-				
-				var actualSpeed = ENEMY_MOVE_SPEED * (0.3 + speedMultiplier);
-				this.m_x += actualSpeed * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD);
-				this.m_y += actualSpeed * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD);
-				
-				if (Math.abs(this.m_x - this.m_target.x) < 1 && Math.abs(this.m_y - this.m_target.y) < 1) {
-					this.m_command = COMMAND_ATTACK_TARGET;
-					this.m_target = cc.p(battle.m_base.m_x, battle.m_base.m_y);
+				else {
+					if (targetAngle > this.m_angle) this.m_angle -= rotateAmount;
+					else if (targetAngle < this.m_angle) this.m_angle += rotateAmount;
 				}
-			}
-			else if (this.m_command == COMMAND_ATTACK_TARGET) {
-				if (this.m_angle == targetAngle) {
-					if (cooldownCount >= ENEMY_COOLDOWN) {
-						cooldownCount -= ENEMY_COOLDOWN;
-						this.Shoot();
+				// Correct the angle
+				if (this.m_angle > 360) this.m_angle -= 360;
+				if (this.m_angle < 0) this.m_angle += 360;
+				
+				
+				
+				// Process movement
+				if (this.m_command == COMMAND_FOLLOW_WAYPOINT) {
+					// Floow the waypoint that lead to the base
+					this.m_x += this.GetMoveSpeed() * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD);
+					this.m_y += this.GetMoveSpeed() * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD);
+					
+					if (Math.abs(this.m_x - this.m_target.x) < 2 && Math.abs(this.m_y - this.m_target.y) < 2) {
+						targetIndex ++;
+						if (targetIndex < this.m_path.length) {
+							this.m_target = this.m_path[targetIndex];
+						}
+						else {
+							var decisionAngle = Math.random() * 360;
+							var targetX = battle.m_base.m_x + 3 * Math.sin(decisionAngle * DEG_TO_RAD);
+							var targetY = battle.m_base.m_y + 3 * Math.cos(decisionAngle * DEG_TO_RAD);
+							
+							this.m_target = cc.p(targetX, targetY);
+							this.m_command = COMMAND_MOVE_TO_TARGET;
+						}
+					}
+				}
+				else if (this.m_command == COMMAND_MOVE_TO_TARGET) {
+					var speedMultiplier = DistanceBetweenTwoPoint (this.m_x, this.m_y, this.m_target.x, this.m_target.y) / 6;
+					if (speedMultiplier > 0.7) speedMultiplier = 0.7;
+					
+					var actualSpeed = this.GetMoveSpeed() * (0.3 + speedMultiplier);
+					this.m_x += actualSpeed * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD);
+					this.m_y += actualSpeed * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD);
+					
+					if (Math.abs(this.m_x - this.m_target.x) < 1 && Math.abs(this.m_y - this.m_target.y) < 1) {
+						this.m_command = COMMAND_ATTACK_TARGET;
+						this.m_target = cc.p(battle.m_base.m_x, battle.m_base.m_y);
+					}
+				}
+				else if (this.m_command == COMMAND_ATTACK_TARGET) {
+					if (this.m_angle == targetAngle) {
+						if (cooldownCount >= ENEMY_COOLDOWN) {
+							cooldownCount -= ENEMY_COOLDOWN;
+							this.Shoot();
+						}
 					}
 				}
 			}
@@ -129,8 +134,10 @@ CreateEnemy[1][3] = function (battle, layer, path, modifier) {
 	
 	// Shoot function
 	enemy.Shoot = function () {
-		var randomizeAngle = ENEMY_ACCURACY - Math.random() * ENEMY_ACCURACY * 2;
-		battle.SpawnEnemyProjectile (ENEMY_PROJECTILE_TYPE, this.m_x, this.m_y, this.m_angle + randomizeAngle);
+		if (this.m_disarmed <= 0) {
+			var randomizeAngle = ENEMY_ACCURACY - Math.random() * ENEMY_ACCURACY * 2;
+			battle.SpawnEnemyProjectile (ENEMY_PROJECTILE_TYPE, this.m_x, this.m_y, this.m_angle + randomizeAngle);
+		}
 	}
 	
 	// Destroy

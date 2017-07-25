@@ -149,6 +149,7 @@ function Battle(bgLayer, layer, campaignID, missionID) {
 					this.m_turrets[i].Update (deltaTime);
 				}
 				for (var i=0; i<this.m_enemies.length; i++) {
+					this.m_enemies[i].LocalUpdate (deltaTime);
 					this.m_enemies[i].Update (deltaTime);
 				}
 				for (var i=0; i<this.m_projectiles.length; i++) {

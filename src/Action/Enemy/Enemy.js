@@ -2,6 +2,9 @@ var COMMAND_FOLLOW_WAYPOINT = 0;
 var COMMAND_MOVE_TO_TARGET = 1;
 var COMMAND_ATTACK_TARGET = 2;
 
+var STATUS_SLOW_MODIFIER = 0.5;
+var STATUS_AMPLIFY_MODIFIER = 2;
+
 
 function CreateEnemyPrototype (battle, layer) {
 	var enemy = new Enemy (battle, layer);
@@ -15,11 +18,18 @@ var HP_BAR_OFFSET_Y = 70;
 function Enemy (battle, layer) {
 	// Status
 	this.m_live 		= true;
-	this.m_disabled 	= false;
+	this.m_stunned 	= 0;
+	this.m_slowed		= 0;
+	this.m_disarmed		= 0;
+	this.m_amplified	= 0;
+	this.m_corroded		= 0;
 	
 	// Position
 	this.m_x 			= 0;
 	this.m_y 			= 0;
+	this.m_angle		= 0;
+	this.m_moveSpeed	= 0;
+	this.m_rotateSpeed	= 0;
 	
 	// Path
 	this.m_path 		= null;
@@ -69,6 +79,40 @@ function Enemy (battle, layer) {
 		layer.addChild(this.m_HPBarGreen);
 	}
 	
+	this.LocalUpdate = function (deltaTime) {
+		// Count all status
+		if (this.m_stunned > 0) {
+			this.m_stunned -= deltaTime;
+			if (this.m_stunned < 0) {
+				this.m_stunned = 0;
+			}
+		}
+		if (this.m_slowed > 0) {
+			this.m_slowed -= deltaTime;
+			if (this.m_slowed < 0) {
+				this.m_slowed = 0;
+			}
+		}
+		if (this.m_disarmed > 0) {
+			this.m_disarmed -= deltaTime;
+			if (this.m_disarmed < 0) {
+				this.m_disarmed = 0;
+			}
+		}
+		if (this.m_disarmed > 0) {
+			this.m_disarmed -= deltaTime;
+			if (this.m_disarmed < 0) {
+				this.m_disarmed = 0;
+			}
+		}
+		if (this.m_corroded > 0) {
+			this.m_corroded -= deltaTime;
+			if (this.m_corroded < 0) {
+				this.m_corroded = 0;
+			}
+		}
+	}
+	
 	this.UpdateHPBar = function (spriteX, spriteY) {
 		if (this.m_live == true) {
 			this.m_HPBarRed.setPosition (cc.p(spriteX - this.m_HPLength * 0.5, spriteY + (this.m_size * HP_BAR_OFFSET_Y) >> 0));
@@ -80,11 +124,14 @@ function Enemy (battle, layer) {
 	this.Hit = function (damage, piercing) {
 		if (this.m_live == true) {
 			// Calculate resistant
-			var resist = this.m_armor - piercing;
+			var resist = this.GetArmor() - piercing;
 			if (resist < 0) resist = 0;
 			
 			// Deal damage
 			var actualDamage = damage * (1 - resist);
+			if (this.m_amplified > 0) {
+				actualDamage *= STATUS_AMPLIFY_MODIFIER;
+			}
 			this.m_HP -= actualDamage;
 			
 			// Die bitch
@@ -105,8 +152,47 @@ function Enemy (battle, layer) {
 		}
 	}
 	
-	this.Disable = function (time) {
-		// Disable this ship for <time> seconds
+	this.Stun = function (time) {
+		// Stun this ship for <time> seconds
+		this.m_stunned = time;
+	}
+	this.Slow = function (time) {
+		// Slow this ship for <time> seconds
+		this.m_slowed = time;
+	}
+	this.Disarm = function (time) {
+		// Disarm this ship for <time> seconds
+		this.m_disarmed	= time;
+	}
+	this.Amplify = function (time) {
+		// Aplify all damage to this ship for <time> seconds
+		this.m_amplified = time;
+	}
+	this.Corrode = function (time) {
+		// Reduce armor to 0 for <time> seconds
+		this.m_corroded	= time;
+	}
+	
+	
+	
+	// Helper
+	this.GetMoveSpeed = function () {
+		if (this.m_slowed <= 0) 
+			return this.m_moveSpeed;
+		else
+			return this.m_moveSpeed * STATUS_SLOW_MODIFIER;
+	}
+	this.GetRotateSpeed = function () {
+		if (this.m_slowed <= 0) 
+			return this.m_rotateSpeed;
+		else
+			return this.m_rotateSpeed * STATUS_SLOW_MODIFIER;
+	}
+	this.GetArmor = function () {
+		if (this.m_corroded <= 0) 
+			return this.m_armor;
+		else
+			return 0;
 	}
 	
 	this.LocalDestroy = function () {

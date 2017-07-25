@@ -302,6 +302,7 @@ function TurretLaser (battle, layer, x, y) {
 		this.m_active = false;
 		battle.m_money += this.GetSellPrice();
 		this.Destroy();
+		this.m_laserBeam.Destroy();
 	}
 	this.Destroy = function () {
 		layer.removeChild(this.m_baseSprite);
