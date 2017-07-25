@@ -88,6 +88,11 @@ function MissionInfo (layer, x, y) {
 			campaign = c;
 			selecting = 0;
 			
+			// This guarantee that we'll select the latest mission
+			for (var i=0; i<6; i++) {
+				this.SwitchMission(i);
+			}
+			
 			this.RefreshLockStatus();
 		}	
 		this.m_showing = true;

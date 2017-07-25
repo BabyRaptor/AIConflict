@@ -119,11 +119,13 @@ function CreateStarMapLayer() {
 		this.m_targetSprite.setRotation(this.m_targetAngle);
 		this.addChild(this.m_targetSprite);
 		
+		var pastProgress = 0;
 		for (var i=0; i<g_campaignData.length; i++) {
-			if (((g_profile.m_progress / 3) >> 0) == i) {
+			if (g_profile.m_progress < g_campaignData[i].m_missionList.length + pastProgress) {
 				this.m_targetSprite.setPosition(g_campaignData[i].m_mapX, g_campaignData[i].m_mapY);
 				break;
 			}
+			pastProgress += g_campaignData[i].m_missionList.length;
 		}
 	}
 

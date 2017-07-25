@@ -128,7 +128,6 @@ tempMission.AddWaveData (   8, new WaveData(   0,      1,     1,     2,      20,
 tempMission.AddWaveData (   8, new WaveData(   0,      2,     1,     4,      10,        5,         5  ));
 tempMission.AddWaveData (   8, new WaveData(   0,     20,     1,     3,      20,      0.7,         5  ));
 
-
 g_campaignData[0].m_missionList.push (tempMission);
 // ====================================================================
 
@@ -140,23 +139,6 @@ tempMission.m_money = 400;
 
 /*                        Wave               Gate | Start | Area | Type | Number | Latency | Modifier  */
 tempMission.AddWaveData (   1, new WaveData(   0,      1,     1,     1,      10,      1.2,       1.5  ));
-tempMission.AddWaveData (   2, new WaveData(   0,      1,     1,     2,      10,        1,         2  ));
-tempMission.AddWaveData (   2, new WaveData(   0,     10,     1,     1,      10,        1,         2  ));
-tempMission.AddWaveData (   3, new WaveData(   0,      1,     1,     2,      10,        1,       2.5  ));
-tempMission.AddWaveData (   3, new WaveData(   0,     10,     1,     3,      10,        1,       2.5  ));
-tempMission.AddWaveData (   4, new WaveData(   0,      1,     1,     2,      10,        1,         3  ));
-tempMission.AddWaveData (   4, new WaveData(   0,      5,     1,     4,       1,        1,         3  ));
-tempMission.AddWaveData (   5, new WaveData(   0,      1,     1,     2,      10,        1,       3.5  ));
-tempMission.AddWaveData (   5, new WaveData(   0,      5,     1,     1,      10,        1,       3.5  ));
-tempMission.AddWaveData (   5, new WaveData(   0,      5,     1,     4,       2,        5,       3.5  ));
-tempMission.AddWaveData (   6, new WaveData(   0,      1,     1,     4,       5,        5,         4  ));
-tempMission.AddWaveData (   6, new WaveData(   0,      3,     1,     3,      30,      0.5,         4  ));
-tempMission.AddWaveData (   7, new WaveData(   0,      1,     1,     4,       5,        5,       4.5  ));
-tempMission.AddWaveData (   7, new WaveData(   0,      3,     1,     2,      15,        1,       4.5  ));
-tempMission.AddWaveData (   8, new WaveData(   0,      1,     1,     2,      20,      0.7,         5  ));
-tempMission.AddWaveData (   8, new WaveData(   0,      2,     1,     4,      10,        5,         5  ));
-tempMission.AddWaveData (   8, new WaveData(   0,     20,     1,     3,      20,      0.7,         5  ));
-
 
 g_campaignData[0].m_missionList.push (tempMission);
 // ====================================================================
@@ -165,9 +147,26 @@ tempMission = new MissionData();
 tempMission.m_backgroundPath = "res/GSAction/Background/1.jpg";
 tempMission.m_mapPath = "res/GSAction/Map/4.tmx";
 tempMission.m_mapThumbnail = "res/GSMission/Thumbnail/Thumb-1-4.png";
+tempMission.m_money = 400;
 
-
-
-
+/*                        Wave               Gate | Start | Area | Type | Number | Latency | Modifier  */
+tempMission.AddWaveData (   1, new WaveData(   0,      1,     1,     1,      10,      1.2,       1.5  ));
 
 g_campaignData[0].m_missionList.push (tempMission);
+// ====================================================================
+
+
+// ====================================================================
+// PLACE HOLDER - DELETE THIS LATER
+tempMission = new MissionData();
+tempMission.m_backgroundPath = "res/GSAction/Background/1.jpg";
+tempMission.m_mapPath = "res/GSAction/Map/4.tmx";
+tempMission.m_mapThumbnail = "res/GSMission/Thumbnail/Thumb-1-4.png";
+tempMission.m_money = 400;
+
+/*                        Wave               Gate | Start | Area | Type | Number | Latency | Modifier  */
+tempMission.AddWaveData (   1, new WaveData(   0,      1,     1,     1,      10,      1.2,       1.5  ));
+
+g_campaignData[1].m_missionList.push (tempMission);
+// YA, SERIOUSLY, DELETE IT.
+// ====================================================================
