@@ -66,6 +66,7 @@ function Battle(bgLayer, layer, campaignID, missionID) {
 		}
 		
 		// Map objects
+		this.m_path = [];
 		var objects = this.m_map.getObjectGroups()[0].getObjects();
 		for (var i=0; i<objects.length; i++) {
 			var objectX = ((objects[i].x + objects[i].width * 0.5) / BLOCK_SIZE) >> 0;
@@ -76,17 +77,20 @@ function Battle(bgLayer, layer, campaignID, missionID) {
 				this.m_base.SetPosition (objectX, objectY);
 			}
 			else if (objects[i].name == "Path") {
-				this.m_path = [];
-				this.m_path.push (cc.p(objects[i].x, objects[i].y));
+				var tempPath = [];
+				tempPath.push (cc.p(objects[i].x, objects[i].y));
 				for (var j=1; j<objects[i].polylinePoints.length; j++) {
-					this.m_path.push (cc.p(parseInt(objects[i].x) + parseInt(objects[i].polylinePoints[j].x), parseInt(objects[i].y) - parseInt(objects[i].polylinePoints[j].y)));
+					tempPath.push (cc.p(parseInt(objects[i].x) + parseInt(objects[i].polylinePoints[j].x), parseInt(objects[i].y) - parseInt(objects[i].polylinePoints[j].y)));
 				}
+				this.m_path.push(tempPath);
 			}
 		}
 		
 		for (var i=0; i<this.m_path.length; i++) {
-			this.m_path[i].x = Math.floor(this.m_path[i].x / BLOCK_SIZE);
-			this.m_path[i].y = Math.floor(this.m_path[i].y / BLOCK_SIZE);
+			for (var j=0; j<this.m_path[i].length; j++) {
+				this.m_path[i][j].x = Math.floor(this.m_path[i][j].x / BLOCK_SIZE);
+				this.m_path[i][j].y = Math.floor(this.m_path[i][j].y / BLOCK_SIZE);
+			}
 		}
 		
 		this.m_turrets = new Array();
@@ -278,8 +282,8 @@ function Battle(bgLayer, layer, campaignID, missionID) {
 		this.m_projectiles.push (tempProjectile);
 	}
 	
-	this.SpawnEnemy = function (area, type, modifier) {
-		var tempEnemy = CreateEnemy[area][type](this, layer, this.m_path, modifier);
+	this.SpawnEnemy = function (gate, area, type, modifier) {
+		var tempEnemy = CreateEnemy[area][type](this, layer, this.m_path[gate], modifier);
 		this.m_enemies.push (tempEnemy);
 	}
 	
@@ -336,7 +340,7 @@ function Battle(bgLayer, layer, campaignID, missionID) {
 					for (j=0; j<waveData.m_number + 1; j++) {
 						if (this.m_waveTimeCount >= waveData.m_time + j * waveData.m_latency
 						&&  this.m_waveTimeCount - deltaTime < waveData.m_time + j * waveData.m_latency) {
-							this.SpawnEnemy (waveData.m_area, waveData.m_type, waveData.m_modifier);
+							this.SpawnEnemy (waveData.m_gate, waveData.m_area, waveData.m_type, waveData.m_modifier);
 						}
 					}
 				}

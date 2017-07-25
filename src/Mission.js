@@ -47,8 +47,7 @@ g_campaignData[7].m_mapY = 180;
 function MissionData () {
 	this.m_backgroundPath = "";
 	this.m_mapPath = "";
-	this.m_mapThumbnailSmall = "";
-	this.m_mapThumbnailLarge = "";
+	this.m_mapThumbnail = "";
 	
 	this.m_locked = true;
 	this.m_waveData = new Array();
@@ -81,8 +80,7 @@ var tempMission;
 tempMission = new MissionData();
 tempMission.m_backgroundPath = "res/GSAction/Background/1.jpg";
 tempMission.m_mapPath = "res/GSAction/Map/1.tmx";
-tempMission.m_mapThumbnailSmall = "res/GSMission/Thumbnail/S-1-1.png";
-tempMission.m_mapThumbnailLarge = "res/GSMission/Thumbnail/L-1-1.png";
+tempMission.m_mapThumbnail = "res/GSMission/Thumbnail/Thumb-1-1.png";
 tempMission.m_money = 300;
 
 /*                        Wave               Gate | Start | Area | Type | Number | Latency | Modifier  */
@@ -108,8 +106,7 @@ g_campaignData[0].m_missionList.push (tempMission);
 tempMission = new MissionData();
 tempMission.m_backgroundPath = "res/GSAction/Background/1.jpg";
 tempMission.m_mapPath = "res/GSAction/Map/2.tmx";
-tempMission.m_mapThumbnailSmall = "res/GSMission/Thumbnail/S-1-2.png";
-tempMission.m_mapThumbnailLarge = "res/GSMission/Thumbnail/L-1-2.png";
+tempMission.m_mapThumbnail = "res/GSMission/Thumbnail/Thumb-1-2.png";
 tempMission.m_money = 500;
 
 /*                        Wave               Gate | Start | Area | Type | Number | Latency | Modifier  */
@@ -138,6 +135,39 @@ g_campaignData[0].m_missionList.push (tempMission);
 tempMission = new MissionData();
 tempMission.m_backgroundPath = "res/GSAction/Background/1.jpg";
 tempMission.m_mapPath = "res/GSAction/Map/3.tmx";
-tempMission.m_mapThumbnailSmall = "res/GSMission/Thumbnail/S-1-3.png";
-tempMission.m_mapThumbnailLarge = "res/GSMission/Thumbnail/L-1-3.png";
+tempMission.m_mapThumbnail = "res/GSMission/Thumbnail/Thumb-1-3.png";
+tempMission.m_money = 400;
+
+/*                        Wave               Gate | Start | Area | Type | Number | Latency | Modifier  */
+tempMission.AddWaveData (   1, new WaveData(   0,      1,     1,     1,      10,      1.2,       1.5  ));
+tempMission.AddWaveData (   2, new WaveData(   0,      1,     1,     2,      10,        1,         2  ));
+tempMission.AddWaveData (   2, new WaveData(   0,     10,     1,     1,      10,        1,         2  ));
+tempMission.AddWaveData (   3, new WaveData(   0,      1,     1,     2,      10,        1,       2.5  ));
+tempMission.AddWaveData (   3, new WaveData(   0,     10,     1,     3,      10,        1,       2.5  ));
+tempMission.AddWaveData (   4, new WaveData(   0,      1,     1,     2,      10,        1,         3  ));
+tempMission.AddWaveData (   4, new WaveData(   0,      5,     1,     4,       1,        1,         3  ));
+tempMission.AddWaveData (   5, new WaveData(   0,      1,     1,     2,      10,        1,       3.5  ));
+tempMission.AddWaveData (   5, new WaveData(   0,      5,     1,     1,      10,        1,       3.5  ));
+tempMission.AddWaveData (   5, new WaveData(   0,      5,     1,     4,       2,        5,       3.5  ));
+tempMission.AddWaveData (   6, new WaveData(   0,      1,     1,     4,       5,        5,         4  ));
+tempMission.AddWaveData (   6, new WaveData(   0,      3,     1,     3,      30,      0.5,         4  ));
+tempMission.AddWaveData (   7, new WaveData(   0,      1,     1,     4,       5,        5,       4.5  ));
+tempMission.AddWaveData (   7, new WaveData(   0,      3,     1,     2,      15,        1,       4.5  ));
+tempMission.AddWaveData (   8, new WaveData(   0,      1,     1,     2,      20,      0.7,         5  ));
+tempMission.AddWaveData (   8, new WaveData(   0,      2,     1,     4,      10,        5,         5  ));
+tempMission.AddWaveData (   8, new WaveData(   0,     20,     1,     3,      20,      0.7,         5  ));
+
+
+g_campaignData[0].m_missionList.push (tempMission);
+// ====================================================================
+
+tempMission = new MissionData();
+tempMission.m_backgroundPath = "res/GSAction/Background/1.jpg";
+tempMission.m_mapPath = "res/GSAction/Map/4.tmx";
+tempMission.m_mapThumbnail = "res/GSMission/Thumbnail/Thumb-1-4.png";
+
+
+
+
+
 g_campaignData[0].m_missionList.push (tempMission);

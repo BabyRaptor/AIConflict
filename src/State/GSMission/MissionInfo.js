@@ -6,19 +6,21 @@ function MissionInfo (layer, x, y) {
 	var MOVE_AMOUNT = 600;
 	var MOVE_SPEED = 1300;
 
+	var PANEL_TITLE_X = 00;
+	var PANEL_TITLE_Y = 190;
 	var LBL_SELECTMISSION_X = 0;
-	var LBL_SELECTMISSION_Y = 230;
+	var LBL_SELECTMISSION_Y = 190;
 	
 	var BTN_START_X = -225;
-	var BTN_START_Y= -280;
+	var BTN_START_Y= -260;
 	var BTN_CLOSE_X = 225;
-	var BTN_CLOSE_Y= -280;
+	var BTN_CLOSE_Y= -260;
 	
 	var MISSION_MAP_X = 0;
 	var MISSION_MAP_Y = 42;
 	
-	var SMALL_THUMBNAIL_X = [-200, 0, 200];
-	var SMALL_THUMBNAIL_Y = [-185, -185, -185];
+	var SMALL_THUMBNAIL_X = [-200, 0, 200, -200, 0, 200];
+	var SMALL_THUMBNAIL_Y = [50, 50, 50, -74, -74, -74];
 	
 	var THUMBNAIL_SWITCH_SPEED = 3;
 	
@@ -31,32 +33,22 @@ function MissionInfo (layer, x, y) {
 	
 	this.m_infoPanel = new BigPanel(layer, 1, x, y, PANEL_W, PANEL_H);
 	
-	this.m_lblSelectMission = new cc.LabelTTF("SELECT MISSION", GetFont("Nasalization"), 40);
+	this.m_titlePanel = new SmallPanel(layer, 1, x + PANEL_TITLE_X, y + PANEL_TITLE_Y, 12, 2);
+	
+	this.m_lblSelectMission = new cc.LabelTTF(" SELECT MISSION ", GetFont("Nasalization"), 40);
 	this.m_lblSelectMission.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_lblSelectMission.setPosition (cc.p(x + LBL_SELECTMISSION_X, y + LBL_SELECTMISSION_Y));
 	this.m_lblSelectMission.setLocalZOrder (LAYER_UI + 1);
 	this.m_lblSelectMission.setFontFillColor (new cc.Color(255, 255, 255));
-	//this.m_lblSelectMission.enableStroke (new cc.Color(59, 209, 255), 2);
+	this.m_lblSelectMission.enableStroke (new cc.Color(16, 173, 255, 0.5), 1);
+	this.m_lblSelectMission.enableShadow (new cc.Color(100, 220, 255, 255), cc.size(0, 0), 15);
 	layer.addChild(this.m_lblSelectMission);
 	
 	
-	this.m_missionMap = cc.Sprite.create("res/GSMission/Thumbnail/L-1-1.png");
-	this.m_missionMap.setAnchorPoint(0.5, 0.5);
-	this.m_missionMap.setPosition(cc.p(this.m_x + MISSION_MAP_X, this.m_y + MISSION_MAP_Y));
-	this.m_missionMap.setLocalZOrder (LAYER_UI + 1);
-	layer.addChild(this.m_missionMap);
-	
-	this.m_missionMapBorder = cc.Sprite.create("res/GSMission/Thumbnail/BigBorder.png");
-	this.m_missionMapBorder.setAnchorPoint(0.5, 0.5);
-	this.m_missionMapBorder.setPosition(cc.p(this.m_x + MISSION_MAP_X, this.m_y + MISSION_MAP_Y));
-	this.m_missionMapBorder.setLocalZOrder (LAYER_UI + 2);
-	layer.addChild(this.m_missionMapBorder);
-		
-	
 	this.m_missionBorder = new Array();
 	this.m_missionThumbnail = new Array();
-	for (var i=0; i<3; i++) {
-		this.m_missionThumbnail[i] = cc.Sprite.create("res/GSMission/Thumbnail/S-1-1.png");
+	for (var i=0; i<6; i++) {
+		this.m_missionThumbnail[i] = cc.Sprite.create("res/GSMission/Thumbnail/Thumb-1-1.png");
 		this.m_missionThumbnail[i].setAnchorPoint(0.5, 0.5);
 		this.m_missionThumbnail[i].setPosition(cc.p(this.m_x + SMALL_THUMBNAIL_X[i], this.m_y + SMALL_THUMBNAIL_Y[i]));
 		this.m_missionThumbnail[i].setLocalZOrder (LAYER_UI + 1);
@@ -82,8 +74,6 @@ function MissionInfo (layer, x, y) {
 	var selecting = -1;
 	var selectorAlpha = 0;
 	var moveOffset = MOVE_AMOUNT;
-	var largeThumbnailAlpha = 255;
-	var largeThumbnailAlphaDirection = 1;
 	
 	
 	this.Init = function () {
@@ -96,9 +86,8 @@ function MissionInfo (layer, x, y) {
 		
 		if (campaign != c) {
 			campaign = c;
-			
 			selecting = 0;
-			this.m_missionMap.setTexture(g_campaignData[campaign].m_missionList[0].m_mapThumbnailLarge);
+			
 			this.RefreshLockStatus();
 		}	
 		this.m_showing = true;
@@ -108,7 +97,6 @@ function MissionInfo (layer, x, y) {
 		if (g_campaignData[campaign].m_missionList[mission] != null) {
 			if (g_campaignData[campaign].m_missionList[mission].m_locked == false) {
 				selecting = mission;
-				largeThumbnailAlphaDirection = 0;
 			}
 		}
 	}
@@ -118,9 +106,9 @@ function MissionInfo (layer, x, y) {
 	}
 	
 	this.RefreshLockStatus = function () {
-		for (var i=0; i<3; i++) {
+		for (var i=0; i<6; i++) {
 			if (g_campaignData[campaign].m_missionList[i] != null) {
-				this.m_missionThumbnail[i].setTexture(g_campaignData[campaign].m_missionList[i].m_mapThumbnailSmall);
+				this.m_missionThumbnail[i].setTexture(g_campaignData[campaign].m_missionList[i].m_mapThumbnail);
 				if (g_campaignData[campaign].m_missionList[i].m_locked == true) {
 					this.m_missionBorder[i].setTexture("res/GSMission/Thumbnail/BorderLock.png");
 				}
@@ -148,7 +136,7 @@ function MissionInfo (layer, x, y) {
 			event: cc.EventListener.TOUCH_ONE_BY_ONE,
 			swallowTouches: true,
 			onTouchBegan: function (touch, event) {
-				for (var i=0; i<3; i++) {
+				for (var i=0; i<6; i++) {
 					if (touch.getLocation().x >= instance.m_x + SMALL_THUMBNAIL_X[i] - 100
 					&&  touch.getLocation().x <= instance.m_x + SMALL_THUMBNAIL_X[i] + 100
 					&&  touch.getLocation().y >= instance.m_y + SMALL_THUMBNAIL_Y[i] - 60 + moveOffset
@@ -182,16 +170,13 @@ function MissionInfo (layer, x, y) {
 		}
 		
 		this.m_infoPanel.SetPosition (this.m_x, this.m_y + moveOffset);
+		this.m_titlePanel.SetPosition (this.m_x + PANEL_TITLE_X, this.m_y + moveOffset + PANEL_TITLE_Y);
 		this.m_lblSelectMission.setPosition (cc.p(this.m_x + LBL_SELECTMISSION_X, this.m_y + moveOffset + LBL_SELECTMISSION_Y));
 		
 		this.m_startButton.SetPosition (this.m_x + BTN_START_X, this.m_y + BTN_START_Y + moveOffset);
 		this.m_closeButton.SetPosition (this.m_x + BTN_CLOSE_X, this.m_y + BTN_CLOSE_Y + moveOffset);
 		
-		this.m_missionMap.setPosition(cc.p(this.m_x + MISSION_MAP_X, this.m_y + MISSION_MAP_Y + moveOffset));
-		this.m_missionMapBorder.setPosition(cc.p(this.m_x + MISSION_MAP_X, this.m_y + MISSION_MAP_Y + moveOffset));
-		
-		
-		for (var i=0; i<3; i++) {
+		for (var i=0; i<6; i++) {
 			this.m_missionThumbnail[i].setPosition(cc.p(this.m_x + SMALL_THUMBNAIL_X[i], this.m_y + SMALL_THUMBNAIL_Y[i] + moveOffset));
 			this.m_missionBorder[i].setPosition(cc.p(this.m_x + SMALL_THUMBNAIL_X[i], this.m_y + SMALL_THUMBNAIL_Y[i] + moveOffset));
 		}
@@ -212,22 +197,6 @@ function MissionInfo (layer, x, y) {
 		else {
 			this.m_missionSelector.setOpacity (0);
 		}
-		
-		if (largeThumbnailAlphaDirection == 0) {
-			largeThumbnailAlpha -= deltaTime * 255 * THUMBNAIL_SWITCH_SPEED;
-			if (largeThumbnailAlpha <= 0) {
-				largeThumbnailAlpha = 0;
-				largeThumbnailAlphaDirection = 1;
-				this.m_missionMap.setTexture(g_campaignData[campaign].m_missionList[selecting].m_mapThumbnailLarge);
-			}
-		}
-		else {
-			largeThumbnailAlpha += deltaTime * 255 * THUMBNAIL_SWITCH_SPEED;
-			if (largeThumbnailAlpha >= 255) {
-				largeThumbnailAlpha = 255;
-			}
-		}
-		this.m_missionMap.setOpacity (largeThumbnailAlpha);
 	}
 	
 	this.Start = function () {

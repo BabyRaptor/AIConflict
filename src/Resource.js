@@ -107,8 +107,7 @@ for (var i=1; i<=g_campaignData.length; i++) {
 
 for (var i=0; i<g_campaignData.length; i++) {
 	for (var j=0; j<g_campaignData[i].m_missionList.length; j++) {
-		g_imageList.push (g_campaignData[i].m_missionList[j].m_mapThumbnailSmall);
-		g_imageList.push (g_campaignData[i].m_missionList[j].m_mapThumbnailLarge);
+		g_imageList.push (g_campaignData[i].m_missionList[j].m_mapThumbnail);
 		g_fileList.push (g_campaignData[i].m_missionList[j].m_mapPath);
 	}
 }
