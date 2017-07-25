@@ -96,9 +96,9 @@ CreateEnemy[1][4] = function (battle, layer, path, modifier) {
 							this.m_target = this.m_path[targetIndex];
 						}
 						else {
-							var decisionAngle = Math.random() * 360;
-							var targetX = battle.m_base.m_x + 3 * Math.sin(decisionAngle * DEG_TO_RAD);
-							var targetY = battle.m_base.m_y + 3 * Math.cos(decisionAngle * DEG_TO_RAD);
+							var decisionAngle = AngleBetweenTwoPoint(battle.m_base.m_x, battle.m_base.m_y, this.m_x, this.m_y) + 40 - Math.random() * 80;
+							var targetX = battle.m_base.m_x + 5 * Math.sin(decisionAngle * DEG_TO_RAD);
+							var targetY = battle.m_base.m_y + 5 * Math.cos(decisionAngle * DEG_TO_RAD);
 							
 							this.m_target = cc.p(targetX, targetY);
 							this.m_command = COMMAND_MOVE_TO_TARGET;
