@@ -4,7 +4,7 @@ var PROJECTILE_GAUSS_SPEED = [50, 50, 50, 50, 50];
 var PROJECTILE_GAUSS_PIERCE = [1, 1, 1, 1, 1];
 var PROJECTILE_GAUSS_CHECK_NUMBER = 5;
 
-function ProjectileGauss(battle, layer, x, y, angle, level) {
+function ProjectileGauss(battle, layer, x, y, angle, owner) {
 	this.m_type = PROJECTILE_GAUSS;
 	
 	this.m_live = true;
@@ -29,8 +29,8 @@ function ProjectileGauss(battle, layer, x, y, angle, level) {
 	this.Update = function (deltaTime) {
 		if (this.m_live == true) {
 			for (var i=0; i<PROJECTILE_GAUSS_CHECK_NUMBER; i++) {
-				this.m_x += PROJECTILE_GAUSS_SPEED[level] * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD) / PROJECTILE_GAUSS_CHECK_NUMBER;
-				this.m_y += PROJECTILE_GAUSS_SPEED[level] * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD) / PROJECTILE_GAUSS_CHECK_NUMBER;
+				this.m_x += this.GetSpeed() * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD) / PROJECTILE_GAUSS_CHECK_NUMBER;
+				this.m_y += this.GetSpeed() * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD) / PROJECTILE_GAUSS_CHECK_NUMBER;
 				
 				
 				if (this.m_x < -20 || this.m_y < -20 || this.m_x > battle.m_mapWidth + 20 || this.m_y > battle.m_mapHeight + 20) {
@@ -41,7 +41,7 @@ function ProjectileGauss(battle, layer, x, y, angle, level) {
 				this.CheckCollision();
 			}
 			
-			travel += PROJECTILE_GAUSS_SPEED[level] * deltaTime * 60;
+			travel += this.GetSpeed() * deltaTime * 60;
 			if (travel > 1000) {
 				travel = 1000;
 			}
@@ -63,7 +63,7 @@ function ProjectileGauss(battle, layer, x, y, angle, level) {
 			var tempEnemy = battle.m_enemies[i];
 			if (hitList.indexOf (tempEnemy) == -1) {
 				if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= tempEnemy.m_size) {
-					tempEnemy.Hit (PROJECTILE_GAUSS_DAMAGE[level], PROJECTILE_GAUSS_PIERCE[level]);
+					tempEnemy.Hit (this.GetDamage(), this.GetPierce());
 					hitList.push (tempEnemy);
 					return;
 				}
@@ -77,5 +77,16 @@ function ProjectileGauss(battle, layer, x, y, angle, level) {
 			layer.removeChild(this.m_sprite);
 			PutIntoPool(this.m_sprite);
 		}
+	}
+	
+	
+	this.GetSpeed = function() {
+		return PROJECTILE_GAUSS_SPEED[owner.m_level];
+	}
+	this.GetDamage = function() {
+		return PROJECTILE_GAUSS_DAMAGE[owner.m_level];
+	}
+	this.GetPierce = function() {
+		return PROJECTILE_GAUSS_PIERCE[owner.m_level];
 	}
 }

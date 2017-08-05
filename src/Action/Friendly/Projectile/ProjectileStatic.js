@@ -9,7 +9,7 @@ var PROJECTILE_STATIC_FRAME_NUMBER = 4;
 var PROJECTILE_STATIC_FRAME_SIZE = 50;
 var PROJECTILE_STATIC_FRAME_DURATION = 0.032;
 
-function ProjectileStatic(battle, layer, x, y, angle, level) {
+function ProjectileStatic(battle, layer, x, y, angle, owner) {
 	this.m_type = PROJECTILE_STATIC;
 	
 	this.m_live = true;
@@ -37,8 +37,8 @@ function ProjectileStatic(battle, layer, x, y, angle, level) {
 	
 	this.Update = function (deltaTime) {
 		if (this.m_live == true) {
-			this.m_x += PROJECTILE_STATIC_SPEED[level] * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD);
-			this.m_y += PROJECTILE_STATIC_SPEED[level] * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD);
+			this.m_x += this.GetSpeed() * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD);
+			this.m_y += this.GetSpeed() * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD);
 			
 			if (this.m_x < -1 || this.m_y < -1 || this.m_x > battle.m_mapWidth + 1 || this.m_y > battle.m_mapHeight + 1) {
 				this.Destroy();
@@ -55,8 +55,8 @@ function ProjectileStatic(battle, layer, x, y, angle, level) {
 			
 			for (var i=0; i<battle.m_enemies.length; i++) {
 				var tempEnemy = battle.m_enemies[i];
-				if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= PROJECTILE_STATIC_AOE[level]) {
-					tempEnemy.Hit (PROJECTILE_STATIC_DAMAGE[level] * deltaTime, PROJECTILE_STATIC_PIERCE[level]);
+				if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= this.GetAOE() + tempEnemy.m_size) {
+					tempEnemy.Hit (this.GetDamage() * deltaTime, this.GetPierce());
 					
 					var alreadyATarget = false;
 					for (var j=0; j<this.m_sparkList.length; j++) {
@@ -70,7 +70,7 @@ function ProjectileStatic(battle, layer, x, y, angle, level) {
 						var sparkFound = false;
 						for (var j=0; j<this.m_sparkList.length; j++) {
 							if (!this.m_sparkList[j].m_active) {
-								this.m_sparkList[j].Spawn (tempEnemy, level);
+								this.m_sparkList[j].Spawn (tempEnemy, owner.m_level);
 								sparkFound = true;
 								break;
 							}
@@ -113,6 +113,19 @@ function ProjectileStatic(battle, layer, x, y, angle, level) {
 		}
 	}
 	
+	
+	this.GetSpeed = function() {
+		return PROJECTILE_STATIC_SPEED[owner.m_level];
+	}
+	this.GetDamage = function() {
+		return PROJECTILE_STATIC_DAMAGE[owner.m_level];
+	}
+	this.GetPierce = function() {
+		return PROJECTILE_STATIC_PIERCE[owner.m_level];
+	}
+	this.GetAOE = function() {
+		return PROJECTILE_STATIC_AOE[owner.m_level];
+	}
 }
 
 
@@ -182,9 +195,7 @@ function StaticSpark(battle, layer, owner) {
 		}
 	}
 	this.Destroy = function () {
-		if (this.m_live == true) {
-			layer.removeChild(this.m_sprite);
-			PutIntoPool(this.m_sprite);
-		}
+		layer.removeChild(this.m_sprite);
+		PutIntoPool(this.m_sprite);
 	}
 }

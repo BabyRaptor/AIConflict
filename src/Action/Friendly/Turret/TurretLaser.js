@@ -149,7 +149,7 @@ function TurretLaser (battle, layer, x, y) {
 					this.ScanForTarget();
 				}
 				else {
-					if (DistanceBetweenTwoPoint (this.m_x, this.m_y, this.m_target.m_x, this.m_target.m_y) > this.GetRange()) {
+					if (DistanceBetweenTwoPoint (this.m_x, this.m_y, this.m_target.m_x, this.m_target.m_y) > this.GetRange() + this.m_target.m_size) {
 						this.m_target = null;
 					}
 					else if (this.m_target.m_live == false) {
@@ -241,7 +241,7 @@ function TurretLaser (battle, layer, x, y) {
 		var currentDistance = 9999;
 		for (var i=0; i<battle.m_enemies.length; i++) {
 			var tempEnemy = battle.m_enemies[i];
-			var tempDistance = DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y);
+			var tempDistance = DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) - tempEnemy.m_size;
 			if (tempDistance <= this.GetRange() && tempDistance < currentDistance) {
 				currentDistance = tempDistance;
 				this.m_target = tempEnemy;
@@ -258,7 +258,7 @@ function TurretLaser (battle, layer, x, y) {
 		var barrelX = this.m_x + TURRET_LASER_BARREL_DISTANCE * Math.sin(this.m_angle * DEG_TO_RAD);
 		var barrelY = this.m_y + TURRET_LASER_BARREL_DISTANCE * Math.cos(this.m_angle * DEG_TO_RAD);
 		
-		this.m_laserBeam.Show (barrelX, barrelY, this.m_target, this.m_level);
+		this.m_laserBeam.Show (barrelX, barrelY);
 	}
 	
 	

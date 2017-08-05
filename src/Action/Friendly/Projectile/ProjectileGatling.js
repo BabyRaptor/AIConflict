@@ -3,7 +3,7 @@ var PROJECTILE_GATLING_DAMAGE = [10, 12, 14, 16, 20];
 var PROJECTILE_GATLING_SPEED = [14, 15, 16, 17, 18];
 var PROJECTILE_GATLING_PIERCE = [0, 0.05, 0.1, 0.15, 0.2];
 
-function ProjectileGatling(battle, layer, x, y, angle, level) {
+function ProjectileGatling(battle, layer, x, y, angle, owner) {
 	this.m_type = PROJECTILE_GATLING;
 	
 	this.m_live = true;
@@ -25,8 +25,8 @@ function ProjectileGatling(battle, layer, x, y, angle, level) {
 	
 	this.Update = function (deltaTime) {
 		if (this.m_live == true) {
-			this.m_x += PROJECTILE_GATLING_SPEED[level] * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD);
-			this.m_y += PROJECTILE_GATLING_SPEED[level] * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD);
+			this.m_x += this.GetSpeed() * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD);
+			this.m_y += this.GetSpeed() * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD);
 			
 			
 			if (this.m_x < -1 || this.m_y < -1 || this.m_x > battle.m_mapWidth + 1 || this.m_y > battle.m_mapHeight + 1) {
@@ -51,7 +51,7 @@ function ProjectileGatling(battle, layer, x, y, angle, level) {
 			if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= tempEnemy.m_size) {
 				this.Destroy();
 				battle.SpawnExplosion (EXPLOSION_GATLING, 1.2, this.m_x, this.m_y);
-				tempEnemy.Hit (PROJECTILE_GATLING_DAMAGE[level], PROJECTILE_GATLING_PIERCE[level]);
+				tempEnemy.Hit (this.GetDamage(), this.GetPierce());
 				return;
 			}
 		}
@@ -63,5 +63,16 @@ function ProjectileGatling(battle, layer, x, y, angle, level) {
 			layer.removeChild(this.m_sprite);
 			PutIntoPool(this.m_sprite);
 		}
+	}
+	
+	
+	this.GetSpeed = function() {
+		return PROJECTILE_GATLING_SPEED[owner.m_level];
+	}
+	this.GetDamage = function() {
+		return PROJECTILE_GATLING_DAMAGE[owner.m_level];
+	}
+	this.GetPierce = function() {
+		return PROJECTILE_GATLING_PIERCE[owner.m_level];
 	}
 }

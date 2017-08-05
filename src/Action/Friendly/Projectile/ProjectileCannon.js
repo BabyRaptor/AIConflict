@@ -6,7 +6,7 @@ var PROJECTILE_CANNON_AOE = [1, 1.2, 1.5, 1.7, 2];
 var PROJECTILE_CANNON_AOE_DAMAGE = [60, 80, 100, 120, 140];
 var PROJECTILE_CANNON_AOE_PIERCE = [0, 0, 0, 0, 0];
 
-function ProjectileCannon(battle, layer, x, y, angle, level) {
+function ProjectileCannon(battle, layer, x, y, angle, owner) {
 	var KILL_DELAY = 2;
 	this.m_type = PROJECTILE_CANNON;
 	
@@ -41,8 +41,8 @@ function ProjectileCannon(battle, layer, x, y, angle, level) {
 	
 	this.Update = function (deltaTime) {
 		if (this.m_live == true && this.m_markForKill == false) {
-			this.m_x += PROJECTILE_CANNON_SPEED[level] * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD);
-			this.m_y += PROJECTILE_CANNON_SPEED[level] * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD);
+			this.m_x += this.GetSpeed() * deltaTime * Math.sin(this.m_angle * DEG_TO_RAD);
+			this.m_y += this.GetSpeed() * deltaTime * Math.cos(this.m_angle * DEG_TO_RAD);
 			
 			
 			if (this.m_x < -5 || this.m_y < -5 || this.m_x > battle.m_mapWidth + 5 || this.m_y > battle.m_mapHeight + 5) {
@@ -79,13 +79,13 @@ function ProjectileCannon(battle, layer, x, y, angle, level) {
 				this.m_trailParticle.stopSystem();
 				
 				battle.SpawnExplosion (EXPLOSION_FIRE_BLUE, 1, this.m_x, this.m_y);
-				tempEnemy.Hit (PROJECTILE_CANNON_DAMAGE[level], PROJECTILE_CANNON_PIERCE[level]);
+				tempEnemy.Hit (this.GetDamage(), this.GetPierce());
 				
 				for (var j=0; j<battle.m_enemies.length; j++) {
 					if (i != j) {
 						var tempEnemy2 = battle.m_enemies[j];
-						if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy2.m_x, tempEnemy2.m_y) <= tempEnemy.m_size + PROJECTILE_CANNON_AOE[level]) {
-							tempEnemy2.Hit (PROJECTILE_CANNON_AOE_DAMAGE[level], PROJECTILE_CANNON_AOE_PIERCE[level]);
+						if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy2.m_x, tempEnemy2.m_y) <= tempEnemy.m_size + PROJECTILE_CANNON_AOE[owner.m_level]) {
+							tempEnemy2.Hit (this.GetAOEDamage(), this.GetAOEPierce());
 						}
 					}
 				}
@@ -101,5 +101,25 @@ function ProjectileCannon(battle, layer, x, y, angle, level) {
 			PutIntoPool(this.m_sprite);
 			battle.UnregisterEmitter (this.m_trailParticle);
 		}
+	}
+	
+	
+	this.GetSpeed = function() {
+		return PROJECTILE_CANNON_SPEED[owner.m_level];
+	}
+	this.GetDamage = function() {
+		return PROJECTILE_CANNON_DAMAGE[owner.m_level];
+	}
+	this.GetAOEDamage = function() {
+		return PROJECTILE_CANNON_AOE_DAMAGE[owner.m_level];
+	}
+	this.GetPierce = function() {
+		return PROJECTILE_CANNON_PIERCE[owner.m_level];
+	}
+	this.GetAOEPierce = function() {
+		return PROJECTILE_CANNON_AOE_PIERCE[owner.m_level];
+	}
+	this.GetAOE = function() {
+		return PROJECTILE_CANNON_AOE[owner.m_level]
 	}
 }

@@ -8,7 +8,6 @@ function ProjectileLaser(battle, layer, owner) {
 	this.m_type = PROJECTILE_LASER;
 	
 	this.m_target = null;
-	this.m_level = 0;
 	
 	this.m_sprite = GetFromPool("res/GSAction/Turret/4-Laser/Laser.png");
 	this.m_sprite.setAnchorPoint(cc.p(0.5, 0));
@@ -44,10 +43,9 @@ function ProjectileLaser(battle, layer, owner) {
 		this.m_tipSprite2.setVisible (false);
 	}
 	
-	this.Show = function (x, y, target, level) {
+	this.Show = function (x, y) {
 		this.m_active = true;
-		this.m_target = target;
-		this.m_level = level;
+		this.m_target = owner.target;
 		this.m_x = x;
 		this.m_y = y;
 		
@@ -83,7 +81,7 @@ function ProjectileLaser(battle, layer, owner) {
 			}
 			
 			if (this.m_target != null) {
-				this.m_target.Hit (PROJECTILE_LASER_DAMAGE[this.m_level] * deltaTime, PROJECTILE_LASER_PIERCE[this.m_level]);
+				this.m_target.Hit (this.GetDamage() * deltaTime, this.GetPierce());
 			}
 		}
 	}
@@ -113,5 +111,12 @@ function ProjectileLaser(battle, layer, owner) {
 			PutIntoPool(this.m_tipSprite1);
 			PutIntoPool(this.m_tipSprite2);
 		}
+	}
+	
+	this.GetDamage = function() {
+		return PROJECTILE_LASER_DAMAGE[owner.m_level];
+	}
+	this.GetPierce = function() {
+		return PROJECTILE_LASER_PIERCE[owner.m_level];
 	}
 }

@@ -1,24 +1,19 @@
-CreateEnemy[1][4] = function (battle, layer, path, modifier) {
+CreateEnemy[1][6] = function (battle, layer, path, modifier) {
 	// Constant for this enemy
 	// Common stuff
 	var ENEMY_AREA 					= 1;
-	var ENEMY_TYPE 					= 4;
+	var ENEMY_TYPE 					= 6;
 	var ENEMY_BOUNTY				= 50;
-	var ENEMY_SIZE					= 1.2;
+	var ENEMY_SIZE					= 1.5;
 	// Properties
-	var ENEMY_HP					= 750;
-	var ENEMY_ARMOR					= 0.5;
-	var ENEMY_MOVE_SPEED 			= 1;
-	var ENEMY_ROTATE_SPEED 			= 30;
+	var ENEMY_HP					= 50000;
+	var ENEMY_ARMOR					= 0.0;
+	var ENEMY_MOVE_SPEED 			= 0.3;
+	var ENEMY_ROTATE_SPEED 			= 15;
 	// Attack
 	var ENEMY_ACCURACY 				= 10;
-	var ENEMY_COOLDOWN				= 0.3;
+	var ENEMY_COOLDOWN				= 0.1;
 	var ENEMY_PROJECTILE_TYPE 		= ENEMY_PROJECTILE_RED_GATLING;
-	// Heal
-	var ENEMY_SKILL_AOE				= 3;
-	var ENEMY_SKILL_RATE			= 20;
-	var ENEMY_SKILL_SPRITE_ALPHA	= 150;
-	var ENEMY_SKILL_FADE_SPEED		= 2;
 	
 	
 	// Create and init the enemy prototype
@@ -36,7 +31,6 @@ CreateEnemy[1][4] = function (battle, layer, path, modifier) {
 	// Some variable used only by this enemy
 	var targetIndex			= 1;
 	var cooldownCount 		= 0;
-	var skillAlphaCount		= 0;
 	
 	// The main sprite
 	enemy.m_sprite = GetFromPool("res/GSAction/Enemy/Area-" + ENEMY_AREA  + "/" + ENEMY_TYPE + ".png");
@@ -45,16 +39,6 @@ CreateEnemy[1][4] = function (battle, layer, path, modifier) {
 	enemy.m_sprite.setRotation(enemy.m_angle);
 	enemy.m_sprite.setPosition (cc.p(0, 0));
 	layer.addChild(enemy.m_sprite);
-	
-	// Skill sprite
-	enemy.m_skillSprite = GetFromPool("res/GSAction/Enemy/Area-" + ENEMY_AREA + "/Heal.png");
-	enemy.m_skillSprite.setAnchorPoint(cc.p(0.5, 0.5));
-	enemy.m_skillSprite.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
-	enemy.m_skillSprite.setLocalZOrder (LAYER_PROJECTILE);
-	enemy.m_skillSprite.setPosition (cc.p(0, 0));
-	enemy.m_skillSprite.setScale (ENEMY_SKILL_AOE);
-	enemy.m_skillSprite.setOpacity(ENEMY_SKILL_SPRITE_ALPHA);
-	layer.addChild(enemy.m_skillSprite);
 	
 	// Update function. This is the must for all enemy
 	enemy.Update = function (deltaTime) {
@@ -132,18 +116,6 @@ CreateEnemy[1][4] = function (battle, layer, path, modifier) {
 			if (cooldownCount < ENEMY_COOLDOWN) {
 				cooldownCount += deltaTime;
 			}
-			
-			// Heal enemy around it
-			var tempEnemyList = this.GetEnemyAroundList();
-			for (var i=0; i<tempEnemyList.length; i++) {
-				tempEnemyList[i].Heal(ENEMY_SKILL_RATE * modifier * deltaTime);
-			}
-			
-			// Update heal sprite
-			skillAlphaCount += deltaTime * ENEMY_SKILL_FADE_SPEED;
-			if (skillAlphaCount > 6.28) {
-				skillAlphaCount -= 6.28;
-			}
 		}
 	}
 	
@@ -154,14 +126,6 @@ CreateEnemy[1][4] = function (battle, layer, path, modifier) {
 			
 			this.m_sprite.setRotation(this.m_angle);
 			this.m_sprite.setPosition (cc.p(spriteX, spriteY));
-			
-			this.m_skillSprite.setPosition (cc.p(spriteX, spriteY));
-			
-			var alphaMultiplier = Math.sin(skillAlphaCount);
-			if (alphaMultiplier < 0) alphaMultiplier *= -1;
-			
-			var skillAlpha = alphaMultiplier * ENEMY_SKILL_SPRITE_ALPHA;
-			this.m_skillSprite.setOpacity(skillAlpha);
 			
 			this.UpdateHPBar(spriteX, spriteY);
 		}
@@ -180,21 +144,8 @@ CreateEnemy[1][4] = function (battle, layer, path, modifier) {
 		battle.SpawnExplosion (EXPLOSION_DEBRIS, 1.8, this.m_x, this.m_y);
 		
 		layer.removeChild(this.m_sprite);
-		layer.removeChild(this.m_skillSprite);
 		
 		PutIntoPool(this.m_sprite);
-		PutIntoPool(this.m_skillSprite);
-	}
-	
-	enemy.GetEnemyAroundList = function() {
-		var tempEnemyList = [];
-		for (var i=0; i<battle.m_enemies.length; i++) {
-			var tempEnemy = battle.m_enemies[i];
-			if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= ENEMY_SKILL_AOE) {
-				tempEnemyList.push (tempEnemy);
-			}
-		}
-		return tempEnemyList;
 	}
 	
 	return enemy;

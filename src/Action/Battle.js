@@ -257,28 +257,28 @@ function Battle(bgLayer, layer, campaignID, missionID) {
 		}
 	}
 	
-	this.SpawnProjectile = function (type, x, y, angle, level, target) {
+	this.SpawnProjectile = function (type, x, y, angle, owner) {
 		var tempProjectile;
 		if (type == PROJECTILE_GATLING) {
-			tempProjectile = new ProjectileGatling (this, layer, x, y, angle, level);
+			tempProjectile = new ProjectileGatling (this, layer, x, y, angle, owner);
 		}
 		else if (type == PROJECTILE_CANNON) {
-			tempProjectile = new ProjectileCannon (this, layer, x, y, angle, level);
+			tempProjectile = new ProjectileCannon (this, layer, x, y, angle, owner);
 		}
 		else if (type == PROJECTILE_MISSILE) {
-			tempProjectile = new ProjectileMissile (this, layer, x, y, angle, level, target);
+			tempProjectile = new ProjectileMissile (this, layer, x, y, angle, owner, owner.m_target);
 		}
 		else if (type == PROJECTILE_LASER) {
 			// Do nothing
 		}
 		else if (type == PROJECTILE_GAUSS) {
-			tempProjectile = new ProjectileGauss (this, layer, x, y, angle, level);
+			tempProjectile = new ProjectileGauss (this, layer, x, y, angle, owner);
 		}
 		else if (type == PROJECTILE_STATIC) {
-			tempProjectile = new ProjectileStatic (this, layer, x, y, angle, level);
+			tempProjectile = new ProjectileStatic (this, layer, x, y, angle, owner);
 		}
 		else if (type == PROJECTILE_SHOCK) {
-			tempProjectile = new ProjectileShock (this, layer, x, y, angle, level);
+			tempProjectile = new ProjectileShock (this, layer, x, y, angle, owner);
 		}
 		this.m_projectiles.push (tempProjectile);
 	}

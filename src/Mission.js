@@ -181,16 +181,52 @@ g_campaignData[0].m_missionList.push (tempMission);
 
 
 // ====================================================================
-// PLACE HOLDER - DELETE THIS LATER
 tempMission = new MissionData();
 tempMission.m_backgroundPath = "res/GSAction/Background/1.jpg";
 tempMission.m_mapPath = "res/GSAction/Map/5.tmx";
 tempMission.m_mapThumbnail = "res/GSMission/Thumbnail/Thumb-1-5.png";
-tempMission.m_money = 400;
+tempMission.m_money = 500;
 
 /*                        Wave               Gate | Start | Area | Type | Number | Latency | Modifier  */
-tempMission.AddWaveData (   1, new WaveData(   0,      1,     1,     1,      10,      1.2,       1.5  ));
+tempMission.AddWaveData (   1, new WaveData(   0,      1,     1,     1,      15,        1,       1.5  ));
+tempMission.AddWaveData (   2, new WaveData(   0,      1,     1,     3,      15,        1,         2  ));
+tempMission.AddWaveData (   3, new WaveData(   0,      1,     1,     2,      15,        1,       2.5  ));
+tempMission.AddWaveData (   4, new WaveData(   0,      1,     1,     2,      15,        1,         3  ));
+tempMission.AddWaveData (   4, new WaveData(   0,      5,     1,     4,       3,        5,         3  ));
+tempMission.AddWaveData (   5, new WaveData(   0,      1,     1,     3,      15,        1,       3.5  ));
+tempMission.AddWaveData (   5, new WaveData(   0,      5,     1,     5,       1,        1,       3.5  ));
+tempMission.AddWaveData (   6, new WaveData(   0,      1,     1,     2,      20,        1,         4  ));
+tempMission.AddWaveData (   6, new WaveData(   0,      5,     1,     4,       5,        5,         4  ));
+tempMission.AddWaveData (   6, new WaveData(   0,    7.5,     1,     5,       1,        1,         4  ));
+tempMission.AddWaveData (   7, new WaveData(   0,      1,     1,     4,       5,        4,         5  ));
+tempMission.AddWaveData (   7, new WaveData(   0,      3,     1,     5,       5,        4,         5  ));
 
 g_campaignData[0].m_missionList.push (tempMission);
-// YA, SERIOUSLY, DELETE IT.
+// ====================================================================
+
+
+// ====================================================================
+tempMission = new MissionData();
+tempMission.m_backgroundPath = "res/GSAction/Background/1.jpg";
+tempMission.m_mapPath = "res/GSAction/Map/6.tmx";
+tempMission.m_mapThumbnail = "res/GSMission/Thumbnail/Thumb-1-6.png";
+tempMission.m_money = 1000;
+
+/*                        Wave               Gate | Start | Area | Type | Number | Latency | Modifier  */
+tempMission.AddWaveData (   1, new WaveData(   0,      1,     1,     6,       1,        1,         1  ));
+tempMission.AddWaveData (   1, new WaveData(   0,      2,     1,     1,      10,        1,         1  ));
+tempMission.AddWaveData (   1, new WaveData(   0,      4,     1,     2,      10,        1,         1  ));
+tempMission.AddWaveData (   1, new WaveData(   0,      8,     1,     3,      10,        1,         1  ));
+tempMission.AddWaveData (   1, new WaveData(   0,     14,     1,     4,       2,        5,         2  ));
+tempMission.AddWaveData (   1, new WaveData(   0,     15,     1,     1,      10,        1,         2  ));
+tempMission.AddWaveData (   1, new WaveData(   0,     18,     1,     2,      10,        1,         2  ));
+tempMission.AddWaveData (   1, new WaveData(   0,     19,     1,     5,       2,        5,         2  ));
+tempMission.AddWaveData (   1, new WaveData(   0,     23,     1,     3,      10,        1,         2  ));
+tempMission.AddWaveData (   1, new WaveData(   0,     34,     1,     4,       3,        5,         4  ));
+tempMission.AddWaveData (   1, new WaveData(   0,     35,     1,     1,      15,        1,         4  ));
+tempMission.AddWaveData (   1, new WaveData(   0,     38,     1,     2,      15,        1,         4  ));
+tempMission.AddWaveData (   1, new WaveData(   0,     39,     1,     5,       3,        5,         4  ));
+tempMission.AddWaveData (   1, new WaveData(   0,     43,     1,     3,      15,        1,         4  ));
+
+g_campaignData[0].m_missionList.push (tempMission);
 // ====================================================================

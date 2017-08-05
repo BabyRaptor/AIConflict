@@ -62,7 +62,7 @@ function ProjectileBaseLaser(battle, layer, owner) {
 		this.m_tipSprite2.setVisible (true);
 		
 		if (this.m_target != null) {
-			this.m_target.Hit (PROJECTILE_BASE_LASER_DAMAGE, PROJECTILE_BASE_LASER_PIERCE);
+			this.m_target.Hit (this.GetDamage(), this.GetPierce());
 		}
 		
 		alpha = 255;
@@ -103,5 +103,12 @@ function ProjectileBaseLaser(battle, layer, owner) {
 			PutIntoPool(this.m_tipSprite1);
 			PutIntoPool(this.m_tipSprite2);
 		}
+	}
+	
+	this.GetDamage = function() {
+		return PROJECTILE_BASE_LASER_DAMAGE;
+	}
+	this.GetPierce = function () {
+		return PROJECTILE_BASE_LASER_PIERCE;
 	}
 }

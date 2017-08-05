@@ -51,6 +51,7 @@
 		"src/Action/Enemy/Area-1/Enemy_1_3.js",
 		"src/Action/Enemy/Area-1/Enemy_1_4.js",
 		"src/Action/Enemy/Area-1/Enemy_1_5.js",
+		"src/Action/Enemy/Area-1/Enemy_1_6.js",
 		"src/Action/Enemy/EnemyProjectile.js",
 		"src/Action/Enemy/EnemyLaser.js",
 		"src/Action/Explosion.js",

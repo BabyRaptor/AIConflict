@@ -1,6 +1,6 @@
 var TURRET_STATIC_NAME = "Static charger";
 var TURRET_STATIC = 6;
-var TURRET_STATIC_PRICE = [400, 200, 250, 300, 350];
+var TURRET_STATIC_PRICE = [350, 180, 220, 180, 300];
 var TURRET_STATIC_PATROL_SPEED = [30, 30, 30, 30, 30];
 var TURRET_STATIC_ROTATE_SPEED = [150, 160, 170, 180, 190];
 var TURRET_STATIC_RANGE = [8, 9, 10, 11, 12];
@@ -144,7 +144,7 @@ function TurretStatic (battle, layer, x, y) {
 					this.ScanForTarget();
 				}
 				else {
-					if (DistanceBetweenTwoPoint (this.m_x, this.m_y, this.m_target.m_x, this.m_target.m_y) > this.GetRange()) {
+					if (DistanceBetweenTwoPoint (this.m_x, this.m_y, this.m_target.m_x, this.m_target.m_y) > this.GetRange() + this.m_target.m_size) {
 						this.m_target = null;
 					}
 					else if (this.m_target.m_live == false) {
@@ -232,7 +232,7 @@ function TurretStatic (battle, layer, x, y) {
 		var currentDistance = 9999;
 		for (var i=0; i<battle.m_enemies.length; i++) {
 			var tempEnemy = battle.m_enemies[i];
-			var tempDistance = DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y);
+			var tempDistance = DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) - tempEnemy.m_size;
 			if (tempDistance <= this.GetRange() && tempDistance < currentDistance) {
 				currentDistance = tempDistance;
 				this.m_target = tempEnemy;
@@ -243,7 +243,7 @@ function TurretStatic (battle, layer, x, y) {
 	this.Shoot = function() {
 		if (cooldownCount <= 0) {
 			var angle = this.m_angle + (1 - Math.random() * 2) * this.GetRecoil();
-			battle.SpawnProjectile (PROJECTILE_STATIC, this.m_x, this.m_y, angle, this.m_level);
+			battle.SpawnProjectile (PROJECTILE_STATIC, this.m_x, this.m_y, angle, this);
 			cooldownCount += this.GetCooldown();
 		}
 	}

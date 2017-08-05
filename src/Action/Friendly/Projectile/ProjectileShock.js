@@ -7,7 +7,7 @@ var PROJECTILE_SHOCK_PIERCE = [0, 0, 0, 0, 0];
 var PROJECTILE_SHOCK_FRAME_SIZE = 200;
 var PROJECTILE_SHOCK_FADE_SPEED = 400;
 
-function ProjectileShock(battle, layer, x, y, angle, level) {
+function ProjectileShock(battle, layer, x, y, angle, owner) {
 	this.m_type = PROJECTILE_SHOCK;
 	
 	this.m_live = true;
@@ -33,18 +33,18 @@ function ProjectileShock(battle, layer, x, y, angle, level) {
 	
 	this.Update = function (deltaTime) {
 		if (this.m_live == true) {
-			if (this.m_extend < TURRET_SHOCK_RANGE [level]) {
-				this.m_extend += PROJECTILE_SHOCK_SPEED [level] * deltaTime;
+			if (this.m_extend < this.GetAOE()) {
+				this.m_extend += this.GetSpeed() * deltaTime;
 				
-				if (this.m_extend > TURRET_SHOCK_RANGE [level]) {
-					this.m_extend = TURRET_SHOCK_RANGE [level];
+				if (this.m_extend > this.GetAOE()) {
+					this.m_extend = this.GetAOE();
 				}
 				
 				for (var i=0; i<battle.m_enemies.length; i++) {
 					var tempEnemy = battle.m_enemies[i];
 					if (hitList.indexOf (tempEnemy) == -1) {
-						if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= this.m_extend) {
-							tempEnemy.Hit (PROJECTILE_SHOCK_DAMAGE[level], PROJECTILE_SHOCK_PIERCE[level]);
+						if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= this.m_extend + tempEnemy.m_size) {
+							tempEnemy.Hit (this.GetDamage(), this.GetPierce());
 							hitList.push (tempEnemy);
 						}
 					}
@@ -72,5 +72,18 @@ function ProjectileShock(battle, layer, x, y, angle, level) {
 			layer.removeChild(this.m_sprite);
 			PutIntoPool(this.m_sprite);
 		}
+	}
+	
+	this.GetSpeed = function() {
+		return PROJECTILE_SHOCK_SPEED[owner.m_level];
+	}
+	this.GetDamage = function() {
+		return PROJECTILE_SHOCK_DAMAGE[owner.m_level];
+	}
+	this.GetPierce = function() {
+		return PROJECTILE_SHOCK_PIERCE[owner.m_level];
+	}
+	this.GetAOE = function() {
+		return TURRET_SHOCK_RANGE[owner.m_level]
 	}
 }

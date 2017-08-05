@@ -98,7 +98,7 @@ function TurretShock (battle, layer, x, y) {
 				
 				for (var i=0; i<battle.m_enemies.length; i++) {
 					var tempEnemy = battle.m_enemies[i];
-					var tempDistance = DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y);
+					var tempDistance = DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) - tempEnemy.m_size;
 					if (tempDistance <= this.GetRange()) {
 						this.Shoot();
 						break;
@@ -150,7 +150,7 @@ function TurretShock (battle, layer, x, y) {
 	
 	this.Shoot = function() {
 		if (cooldownCount <= 0) {
-			battle.SpawnProjectile (PROJECTILE_SHOCK, this.m_x, this.m_y, 0, this.m_level);
+			battle.SpawnProjectile (PROJECTILE_SHOCK, this.m_x, this.m_y, 0, this);
 			cooldownCount += this.GetCooldown();
 		}
 	}
