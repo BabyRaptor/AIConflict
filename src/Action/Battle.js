@@ -81,6 +81,7 @@ function Battle(bgLayer, layer, campaignID, missionID) {
 				tempPath.push (cc.p(objects[i].x, objects[i].y));
 				for (var j=1; j<objects[i].polylinePoints.length; j++) {
 					tempPath.push (cc.p(parseInt(objects[i].x) + parseInt(objects[i].polylinePoints[j].x), parseInt(objects[i].y) - parseInt(objects[i].polylinePoints[j].y)));
+					
 				}
 				this.m_path.push(tempPath);
 			}

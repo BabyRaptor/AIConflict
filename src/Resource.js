@@ -114,7 +114,6 @@ for (var i=0; i<g_campaignData.length; i++) {
 g_imageList.push ("res/GSMission/Thumbnail/Border.png");
 g_imageList.push ("res/GSMission/Thumbnail/BorderGlow.png");
 g_imageList.push ("res/GSMission/Thumbnail/BorderLock.png");
-g_imageList.push ("res/GSMission/Thumbnail/BigBorder.png");
 
 
 // Upgrade

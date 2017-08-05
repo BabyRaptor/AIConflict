@@ -1,4 +1,4 @@
-var BASE_RANGE = 6;
+var BASE_RANGE = 7;
 var BASE_COOL_DOWN = 5;
 
 function Base(battle, layer) {
@@ -77,7 +77,7 @@ function Base(battle, layer) {
 				else if (this.m_target.m_live == false) {
 					this.m_target = null;
 				}
-				if (cooldownCount <= 0) {
+				else if (cooldownCount <= 0) {
 					var barrelX = this.m_x;
 					var barrelY = this.m_y;
 					
