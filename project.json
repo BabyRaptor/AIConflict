@@ -46,12 +46,18 @@
 		"src/Action/Friendly/Projectile/ProjectileShock.js",
 		
 		"src/Action/Enemy/Enemy.js",
+		
 		"src/Action/Enemy/Area-1/Enemy_1_1.js",
 		"src/Action/Enemy/Area-1/Enemy_1_2.js",
 		"src/Action/Enemy/Area-1/Enemy_1_3.js",
 		"src/Action/Enemy/Area-1/Enemy_1_4.js",
 		"src/Action/Enemy/Area-1/Enemy_1_5.js",
 		"src/Action/Enemy/Area-1/Enemy_1_6.js",
+		
+		"src/Action/Enemy/Area-2/Enemy_2_1.js",
+		"src/Action/Enemy/Area-2/Enemy_2_2.js",
+		"src/Action/Enemy/Area-2/Enemy_2_3.js",
+		
 		"src/Action/Enemy/EnemyProjectile.js",
 		"src/Action/Enemy/EnemyLaser.js",
 		"src/Action/Explosion.js",

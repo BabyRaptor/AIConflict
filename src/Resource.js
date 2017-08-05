@@ -228,16 +228,20 @@ g_imageList.push ("res/GSAction/Enemy/Area-1/3.png");
 g_imageList.push ("res/GSAction/Enemy/Area-1/4.png");
 g_imageList.push ("res/GSAction/Enemy/Area-1/5.png");
 g_imageList.push ("res/GSAction/Enemy/Area-1/6.png");
+g_imageList.push ("res/GSAction/Enemy/Area-2/1.png");
+g_imageList.push ("res/GSAction/Enemy/Area-2/2.png");
+g_imageList.push ("res/GSAction/Enemy/Area-2/3.png");
 // Projectile
 g_imageList.push ("res/GSAction/Enemy/Area-1/Gatling.png");
 g_imageList.push ("res/GSAction/Enemy/Area-1/Laser.png");
 g_imageList.push ("res/GSAction/Enemy/Area-1/LaserTip.png");
+g_imageList.push ("res/GSAction/Enemy/Area-2/Ball.png");
 // Skill
 g_imageList.push ("res/GSAction/Enemy/Area-1/Heal.png");
 
 
 // Explosion
-for (var i=1; i<=8; i++) {
+for (var i=1; i<=9; i++) {
 	g_imageList.push ("res/GSAction/Explosion/" + i + ".png");
 }
 // =========================================================================================

@@ -230,3 +230,46 @@ tempMission.AddWaveData (   1, new WaveData(   0,     43,     1,     3,      15,
 
 g_campaignData[0].m_missionList.push (tempMission);
 // ====================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ====================================================================
+tempMission = new MissionData();
+tempMission.m_backgroundPath = "res/GSAction/Background/2.jpg";
+tempMission.m_mapPath = "res/GSAction/Map/7.tmx";
+tempMission.m_mapThumbnail = "res/GSMission/Thumbnail/Thumb-2-1.png";
+tempMission.m_money = 500;
+
+/*                        Wave               Gate | Start | Area | Type | Number | Latency | Modifier  */
+tempMission.AddWaveData (   1, new WaveData(   0,      1,     2,     1,      10,        1,       1.5  ));
+tempMission.AddWaveData (   2, new WaveData(   0,      1,     2,     2,      10,        1,         2  ));
+tempMission.AddWaveData (   2, new WaveData(   0,    1.3,     2,     1,      10,        1,         2  ));
+tempMission.AddWaveData (   3, new WaveData(   0,      1,     2,     3,      20,        1,       2.5  ));
+tempMission.AddWaveData (   4, new WaveData(   0,      1,     2,     2,      10,        1,         3  ));
+tempMission.AddWaveData (   4, new WaveData(   0,      5,     2,     3,      10,        1,         3  ));
+tempMission.AddWaveData (   5, new WaveData(   0,      1,     2,     1,      10,        1,       3.5  ));
+tempMission.AddWaveData (   5, new WaveData(   0,    1.3,     2,     2,      10,        1,       3.5  ));
+tempMission.AddWaveData (   5, new WaveData(   0,    1.6,     2,     3,      10,        1,       3.5  ));
+tempMission.AddWaveData (   6, new WaveData(   0,      1,     2,     2,      15,        1,         4  ));
+tempMission.AddWaveData (   6, new WaveData(   0,      5,     2,     3,      15,      0.5,         4  ));
+tempMission.AddWaveData (   7, new WaveData(   0,      1,     2,     2,       5,      0.5,       4.5  ));
+tempMission.AddWaveData (   7, new WaveData(   0,    1.5,     2,     3,      15,      0.5,       4.5  ));
+
+
+g_campaignData[1].m_missionList.push (tempMission);
+// ====================================================================

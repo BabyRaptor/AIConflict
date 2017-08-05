@@ -6,6 +6,7 @@ var EXPLOSION_RING_RED = 5;
 var EXPLOSION_RING_BLUE = 6;
 var EXPLOSION_FIRE_BLUE = 7;
 var EXPLOSION_DEBRIS_BLUE = 8;
+var EXPLOSION_RING_ORANGE = 9;
 
 function ExplosionData () {
 	this.m_frameNumber = 0;
@@ -49,6 +50,12 @@ g_explosionData[EXPLOSION_DEBRIS_BLUE].m_frameNumber = 35;
 g_explosionData[EXPLOSION_DEBRIS_BLUE].m_frameNumberW = 5;
 g_explosionData[EXPLOSION_DEBRIS_BLUE].m_frameDuration = 0.025;
 g_explosionData[EXPLOSION_DEBRIS_BLUE].m_frameSize = 150;
+
+g_explosionData[EXPLOSION_RING_ORANGE] = new ExplosionData();
+g_explosionData[EXPLOSION_RING_ORANGE].m_frameNumber = 42;
+g_explosionData[EXPLOSION_RING_ORANGE].m_frameNumberW = 8;
+g_explosionData[EXPLOSION_RING_ORANGE].m_frameDuration = 0.016;
+g_explosionData[EXPLOSION_RING_ORANGE].m_frameSize = 100;
 
 
 function Explosion(battle, layer) {
