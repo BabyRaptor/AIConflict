@@ -118,7 +118,7 @@ tempMission.AddWaveData (   5, new WaveData(   0,    1.3,     1,     2,      10,
 tempMission.AddWaveData (   5, new WaveData(   0,    1.6,     1,     3,      10,        1,       3.5  ));
 tempMission.AddWaveData (   6, new WaveData(   0,      1,     1,     2,      15,        1,         4  ));
 tempMission.AddWaveData (   6, new WaveData(   0,      5,     1,     3,      15,      0.5,         4  ));
-tempMission.AddWaveData (   7, new WaveData(   0,      1,     1,     2,       5,      0.5,       4.5  ));
+tempMission.AddWaveData (   7, new WaveData(   0,      1,     1,     2,      15,      0.5,       4.5  ));
 tempMission.AddWaveData (   7, new WaveData(   0,    1.5,     1,     3,      15,      0.5,       4.5  ));
 
 
@@ -267,7 +267,7 @@ tempMission.AddWaveData (   5, new WaveData(   0,    1.3,     2,     2,      10,
 tempMission.AddWaveData (   5, new WaveData(   0,    1.6,     2,     3,      10,        1,       3.5  ));
 tempMission.AddWaveData (   6, new WaveData(   0,      1,     2,     2,      15,        1,         4  ));
 tempMission.AddWaveData (   6, new WaveData(   0,      5,     2,     3,      15,      0.5,         4  ));
-tempMission.AddWaveData (   7, new WaveData(   0,      1,     2,     2,       5,      0.5,       4.5  ));
+tempMission.AddWaveData (   7, new WaveData(   0,      1,     2,     2,      15,      0.5,       4.5  ));
 tempMission.AddWaveData (   7, new WaveData(   0,    1.5,     2,     3,      15,      0.5,       4.5  ));
 
 

@@ -79,6 +79,7 @@ function ProjectileStatic(battle, layer, x, y, angle, owner) {
 						if (!sparkFound) {
 							var tempSpark = new StaticSpark(battle, layer, this);
 							this.m_sparkList.push (tempSpark);
+							tempSpark.Spawn (tempEnemy, owner.m_level);
 						}
 					}
 				}
@@ -170,13 +171,15 @@ function StaticSpark(battle, layer, owner) {
 			}
 			
 			var targetDistance = DistanceBetweenTwoPoint (owner.m_x, owner.m_y, this.m_target.m_x, this.m_target.m_y);
-			if (targetDistance > PROJECTILE_STATIC_AOE[this.m_level]) {
+			if (targetDistance > PROJECTILE_STATIC_AOE[this.m_level] + this.m_target.m_size) {
 				this.m_active = false;
 				this.m_sprite.setVisible (false);
+				this.m_target = null;
 			}
 			else if (this.m_target.m_HP <= 0) {
 				this.m_active = false;
 				this.m_sprite.setVisible (false);
+				this.m_target = null;
 			}
 			
 		}

@@ -236,8 +236,10 @@ g_imageList.push ("res/GSAction/Enemy/Area-1/Gatling.png");
 g_imageList.push ("res/GSAction/Enemy/Area-1/Laser.png");
 g_imageList.push ("res/GSAction/Enemy/Area-1/LaserTip.png");
 g_imageList.push ("res/GSAction/Enemy/Area-2/Ball.png");
+g_imageList.push ("res/GSAction/Enemy/Area-2/Laser.png");
 // Skill
 g_imageList.push ("res/GSAction/Enemy/Area-1/Heal.png");
+g_imageList.push ("res/GSAction/Enemy/Area-2/Haste.png");
 
 // Explosion
 for (var i=0; i<g_explosionData.length; i++) {

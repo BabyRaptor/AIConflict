@@ -3,6 +3,7 @@ var COMMAND_MOVE_TO_TARGET = 1;
 var COMMAND_ATTACK_TARGET = 2;
 
 var STATUS_SLOW_MODIFIER = 0.5;
+var STATUS_HASTE_MODIFIER = 2;
 var STATUS_AMPLIFY_MODIFIER = 2;
 
 
@@ -18,11 +19,12 @@ var HP_BAR_OFFSET_Y = 70;
 function Enemy (battle, layer) {
 	// Status
 	this.m_live 		= true;
-	this.m_stunned 	= 0;
+	this.m_stunned 		= 0;
 	this.m_slowed		= 0;
 	this.m_disarmed		= 0;
 	this.m_amplified	= 0;
 	this.m_corroded		= 0;
+	this.m_hasted		= 0;
 	
 	// Position
 	this.m_x 			= 0;
@@ -111,6 +113,12 @@ function Enemy (battle, layer) {
 				this.m_corroded = 0;
 			}
 		}
+		if (this.m_hasted > 0) {
+			this.m_hasted -= deltaTime;
+			if (this.m_hasted < 0) {
+				this.m_hasted = 0;
+			}
+		}
 	}
 	
 	this.UpdateHPBar = function (spriteX, spriteY) {
@@ -151,42 +159,46 @@ function Enemy (battle, layer) {
 			}
 		}
 	}
+	this.Haste = function (time) {
+		// Stun this ship for <time> seconds
+		if (this.m_hasted < time) this.m_hasted = time;
+	}
 	
 	this.Stun = function (time) {
 		// Stun this ship for <time> seconds
-		this.m_stunned = time;
+		if (this.m_stunned < time) this.m_stunned = time;
 	}
 	this.Slow = function (time) {
 		// Slow this ship for <time> seconds
-		this.m_slowed = time;
+		if (this.m_slowed < time) this.m_slowed = time;
 	}
 	this.Disarm = function (time) {
 		// Disarm this ship for <time> seconds
-		this.m_disarmed	= time;
+		if (this.m_disarmed < time) this.m_disarmed = time;
 	}
 	this.Amplify = function (time) {
 		// Aplify all damage to this ship for <time> seconds
-		this.m_amplified = time;
+		if (this.m_amplified < time) this.m_amplified = time;
 	}
 	this.Corrode = function (time) {
 		// Reduce armor to 0 for <time> seconds
-		this.m_corroded	= time;
+		if (this.m_corroded < time) this.m_corroded = time;
 	}
 	
 	
 	
 	// Helper
 	this.GetMoveSpeed = function () {
-		if (this.m_slowed <= 0) 
-			return this.m_moveSpeed;
-		else
-			return this.m_moveSpeed * STATUS_SLOW_MODIFIER;
+		var speed = this.m_moveSpeed;
+		if (this.m_slowed > 0) speed *= STATUS_SLOW_MODIFIER;
+		if (this.m_hasted > 0) speed *= STATUS_HASTE_MODIFIER;
+		return speed;
 	}
 	this.GetRotateSpeed = function () {
-		if (this.m_slowed <= 0) 
-			return this.m_rotateSpeed;
-		else
-			return this.m_rotateSpeed * STATUS_SLOW_MODIFIER;
+		var speed = this.m_rotateSpeed;
+		if (this.m_slowed > 0) speed *= STATUS_SLOW_MODIFIER;
+		if (this.m_hasted > 0) speed *= STATUS_HASTE_MODIFIER;
+		return speed;
 	}
 	this.GetArmor = function () {
 		if (this.m_corroded <= 0) 

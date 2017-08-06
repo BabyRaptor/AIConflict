@@ -45,7 +45,7 @@ function ProjectileLaser(battle, layer, owner) {
 	
 	this.Show = function (x, y) {
 		this.m_active = true;
-		this.m_target = owner.target;
+		this.m_target = owner.m_target;
 		this.m_x = x;
 		this.m_y = y;
 		
@@ -54,8 +54,8 @@ function ProjectileLaser(battle, layer, owner) {
 		this.m_sprite.setPosition (cc.p(spriteX, spriteY));
 		this.m_tipSprite1.setPosition (cc.p(spriteX, spriteY));
 		
-		var targetSpriteX = (target.m_x + 0.5) * BLOCK_SIZE - battle.m_mapRealWidth * 0.5;
-		var targetSpriteY = (target.m_y + 0.5) * BLOCK_SIZE - battle.m_mapRealHeight * 0.5;
+		var targetSpriteX = (this.m_target.m_x + 0.5) * BLOCK_SIZE - battle.m_mapRealWidth * 0.5;
+		var targetSpriteY = (this.m_target.m_y + 0.5) * BLOCK_SIZE - battle.m_mapRealHeight * 0.5;
 		this.m_tipSprite2.setPosition (cc.p(targetSpriteX, targetSpriteY));
 		
 		this.m_sprite.setVisible (true);
