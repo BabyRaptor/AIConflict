@@ -50,7 +50,7 @@ function ProjectileGatling(battle, layer, x, y, angle, owner) {
 			var tempEnemy = battle.m_enemies[i];
 			if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= tempEnemy.m_size) {
 				this.Destroy();
-				battle.SpawnExplosion (EXPLOSION_GATLING, 1.2, this.m_x, this.m_y);
+				battle.SpawnExplosion (EXPLOSION_GATLING_BLUE, 1.2, this.m_x, this.m_y);
 				tempEnemy.Hit (this.GetDamage(), this.GetPierce());
 				return;
 			}

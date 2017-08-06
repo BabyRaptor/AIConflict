@@ -15,8 +15,6 @@
 		"src/Mission.js",
 		"src/Upgrade.js",
 		"src/Profile.js",
-        "src/Resource.js",
-		
 		"src/SpritePool.js",
 		
 		"src/UI/BigButton.js",
@@ -60,8 +58,9 @@
 		
 		"src/Action/Enemy/EnemyProjectile.js",
 		"src/Action/Enemy/EnemyLaser.js",
-		"src/Action/Explosion.js",
+		
 		"src/Action/Battle.js",
+		"src/Action/Explosion.js",
 		"src/Action/Selector.js",
 		
 		
@@ -83,11 +82,12 @@
 		"src/State/GSShop.js",
 		
 		
-		
 		"src/State/GSAction/TurretBuyingList.js",
 		"src/State/GSAction/TurretInfo.js",
 		"src/State/GSAction/InGameMenu.js",
 		"src/State/GSAction/ResultPopup.js",
-		"src/State/GSAction.js"
+		"src/State/GSAction.js",
+		
+		"src/Resource.js"
     ]
 }

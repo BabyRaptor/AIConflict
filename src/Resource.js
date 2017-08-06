@@ -239,10 +239,9 @@ g_imageList.push ("res/GSAction/Enemy/Area-2/Ball.png");
 // Skill
 g_imageList.push ("res/GSAction/Enemy/Area-1/Heal.png");
 
-
 // Explosion
-for (var i=1; i<=9; i++) {
-	g_imageList.push ("res/GSAction/Explosion/" + i + ".png");
+for (var i=0; i<g_explosionData.length; i++) {
+	g_imageList.push (g_explosionData[i].m_imagePath);
 }
 // =========================================================================================
 

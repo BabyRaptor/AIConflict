@@ -1,62 +1,84 @@
-var EXPLOSION_DEBRIS = 1;
-var EXPLOSION_FIRE = 2;
-var EXPLOSION_GATLING = 3;
-var EXPLOSION_RING = 4;
-var EXPLOSION_RING_RED = 5;
-var EXPLOSION_RING_BLUE = 6;
-var EXPLOSION_FIRE_BLUE = 7;
-var EXPLOSION_DEBRIS_BLUE = 8;
-var EXPLOSION_RING_ORANGE = 9;
+var EXPLOSION_DEBRIS_BLUE = 0;
+var EXPLOSION_GATLING_BLUE = 1;
+var EXPLOSION_FIRE_BLUE = 2;
+var EXPLOSION_RING_BLUE = 3;
+var EXPLOSION_DEBRIS = 4;
+var EXPLOSION_FIRE = 5;
+var EXPLOSION_RING = 6;
+var EXPLOSION_RING_RED = 7;
+var EXPLOSION_RING_ORANGE = 8;
 
 function ExplosionData () {
 	this.m_frameNumber = 0;
 	this.m_frameNumberW = 0;
 	this.m_frameDuration = 0;
 	this.m_frameSize = 0;
+	this.m_imagePath = "";
 }
 var g_explosionData = new Array();
-g_explosionData[EXPLOSION_DEBRIS] = new ExplosionData();
-g_explosionData[EXPLOSION_DEBRIS].m_frameNumber = 35;
-g_explosionData[EXPLOSION_DEBRIS].m_frameNumberW = 5;
-g_explosionData[EXPLOSION_DEBRIS].m_frameDuration = 0.025;
-g_explosionData[EXPLOSION_DEBRIS].m_frameSize = 150;
-
-g_explosionData[EXPLOSION_GATLING] = new ExplosionData();
-g_explosionData[EXPLOSION_GATLING].m_frameNumber = 29;
-g_explosionData[EXPLOSION_GATLING].m_frameNumberW = 8;
-g_explosionData[EXPLOSION_GATLING].m_frameDuration = 0.016;
-g_explosionData[EXPLOSION_GATLING].m_frameSize = 50;
-
-g_explosionData[EXPLOSION_RING_RED] = new ExplosionData();
-g_explosionData[EXPLOSION_RING_RED].m_frameNumber = 42;
-g_explosionData[EXPLOSION_RING_RED].m_frameNumberW = 8;
-g_explosionData[EXPLOSION_RING_RED].m_frameDuration = 0.016;
-g_explosionData[EXPLOSION_RING_RED].m_frameSize = 100;
-
-g_explosionData[EXPLOSION_RING_BLUE] = new ExplosionData();
-g_explosionData[EXPLOSION_RING_BLUE].m_frameNumber = 42;
-g_explosionData[EXPLOSION_RING_BLUE].m_frameNumberW = 8;
-g_explosionData[EXPLOSION_RING_BLUE].m_frameDuration = 0.016;
-g_explosionData[EXPLOSION_RING_BLUE].m_frameSize = 100;
-
-g_explosionData[EXPLOSION_FIRE_BLUE] = new ExplosionData();
-g_explosionData[EXPLOSION_FIRE_BLUE].m_frameNumber = 48;
-g_explosionData[EXPLOSION_FIRE_BLUE].m_frameNumberW = 8;
-g_explosionData[EXPLOSION_FIRE_BLUE].m_frameDuration = 0.016;
-g_explosionData[EXPLOSION_FIRE_BLUE].m_frameSize = 100;
 
 g_explosionData[EXPLOSION_DEBRIS_BLUE] = new ExplosionData();
 g_explosionData[EXPLOSION_DEBRIS_BLUE].m_frameNumber = 35;
 g_explosionData[EXPLOSION_DEBRIS_BLUE].m_frameNumberW = 5;
 g_explosionData[EXPLOSION_DEBRIS_BLUE].m_frameDuration = 0.025;
 g_explosionData[EXPLOSION_DEBRIS_BLUE].m_frameSize = 150;
+g_explosionData[EXPLOSION_DEBRIS_BLUE].m_imagePath = "res/GSAction/Explosion/DebrisBlue.png";
+
+g_explosionData[EXPLOSION_GATLING_BLUE] = new ExplosionData();
+g_explosionData[EXPLOSION_GATLING_BLUE].m_frameNumber = 29;
+g_explosionData[EXPLOSION_GATLING_BLUE].m_frameNumberW = 8;
+g_explosionData[EXPLOSION_GATLING_BLUE].m_frameDuration = 0.016;
+g_explosionData[EXPLOSION_GATLING_BLUE].m_frameSize = 50;
+g_explosionData[EXPLOSION_GATLING_BLUE].m_imagePath = "res/GSAction/Explosion/GatlingBlue.png";
+
+g_explosionData[EXPLOSION_FIRE_BLUE] = new ExplosionData();
+g_explosionData[EXPLOSION_FIRE_BLUE].m_frameNumber = 48;
+g_explosionData[EXPLOSION_FIRE_BLUE].m_frameNumberW = 8;
+g_explosionData[EXPLOSION_FIRE_BLUE].m_frameDuration = 0.016;
+g_explosionData[EXPLOSION_FIRE_BLUE].m_frameSize = 100;
+g_explosionData[EXPLOSION_FIRE_BLUE].m_imagePath = "res/GSAction/Explosion/FireBlue.png";
+
+g_explosionData[EXPLOSION_RING_BLUE] = new ExplosionData();
+g_explosionData[EXPLOSION_RING_BLUE].m_frameNumber = 42;
+g_explosionData[EXPLOSION_RING_BLUE].m_frameNumberW = 8;
+g_explosionData[EXPLOSION_RING_BLUE].m_frameDuration = 0.016;
+g_explosionData[EXPLOSION_RING_BLUE].m_frameSize = 100;
+g_explosionData[EXPLOSION_RING_BLUE].m_imagePath = "res/GSAction/Explosion/RingBlue.png";
+
+g_explosionData[EXPLOSION_DEBRIS] = new ExplosionData();
+g_explosionData[EXPLOSION_DEBRIS].m_frameNumber = 35;
+g_explosionData[EXPLOSION_DEBRIS].m_frameNumberW = 5;
+g_explosionData[EXPLOSION_DEBRIS].m_frameDuration = 0.025;
+g_explosionData[EXPLOSION_DEBRIS].m_frameSize = 150;
+g_explosionData[EXPLOSION_DEBRIS].m_imagePath = "res/GSAction/Explosion/DebrisDefault.png";
+
+g_explosionData[EXPLOSION_FIRE] = new ExplosionData();
+g_explosionData[EXPLOSION_FIRE].m_frameNumber = 48;
+g_explosionData[EXPLOSION_FIRE].m_frameNumberW = 8;
+g_explosionData[EXPLOSION_FIRE].m_frameDuration = 0.016;
+g_explosionData[EXPLOSION_FIRE].m_frameSize = 100;
+g_explosionData[EXPLOSION_FIRE].m_imagePath = "res/GSAction/Explosion/FireDefault.png";
+
+g_explosionData[EXPLOSION_RING] = new ExplosionData();
+g_explosionData[EXPLOSION_RING].m_frameNumber = 42;
+g_explosionData[EXPLOSION_RING].m_frameNumberW = 8;
+g_explosionData[EXPLOSION_RING].m_frameDuration = 0.016;
+g_explosionData[EXPLOSION_RING].m_frameSize = 100;
+g_explosionData[EXPLOSION_RING].m_imagePath = "res/GSAction/Explosion/RingDefault.png";
+
+g_explosionData[EXPLOSION_RING_RED] = new ExplosionData();
+g_explosionData[EXPLOSION_RING_RED].m_frameNumber = 42;
+g_explosionData[EXPLOSION_RING_RED].m_frameNumberW = 8;
+g_explosionData[EXPLOSION_RING_RED].m_frameDuration = 0.016;
+g_explosionData[EXPLOSION_RING_RED].m_frameSize = 100;
+g_explosionData[EXPLOSION_RING_RED].m_imagePath = "res/GSAction/Explosion/RingRed.png";
 
 g_explosionData[EXPLOSION_RING_ORANGE] = new ExplosionData();
 g_explosionData[EXPLOSION_RING_ORANGE].m_frameNumber = 42;
 g_explosionData[EXPLOSION_RING_ORANGE].m_frameNumberW = 8;
 g_explosionData[EXPLOSION_RING_ORANGE].m_frameDuration = 0.016;
 g_explosionData[EXPLOSION_RING_ORANGE].m_frameSize = 100;
-
+g_explosionData[EXPLOSION_RING_ORANGE].m_imagePath = "res/GSAction/Explosion/RingOrange.png";
 
 function Explosion(battle, layer) {
 	this.m_active = false;
@@ -64,7 +86,7 @@ function Explosion(battle, layer) {
 	this.m_y = 0;
 	this.m_scale = 1;
 	
-	this.m_sprite = GetFromPool("res/GSAction/Explosion/1.png");
+	this.m_sprite = GetFromPool("res/GSAction/Explosion/DebrisDefault.png");
 	this.m_sprite.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_sprite.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
 	this.m_sprite.setLocalZOrder (LAYER_EXPLOSION);
@@ -95,7 +117,7 @@ function Explosion(battle, layer) {
 		frameSize = g_explosionData[type].m_frameSize;
 		
 		this.m_scale = scale;
-		this.m_sprite.setTexture("res/GSAction/Explosion/" + type + ".png");
+		this.m_sprite.setTexture( g_explosionData[type].m_imagePath);
 		this.m_sprite.setTextureRect (cc.rect(0, 0, frameSize, frameSize));
 		this.m_sprite.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
 		this.m_sprite.setPosition (cc.p(spriteX, spriteY));
