@@ -27,8 +27,12 @@ g_gsLoaderMainLayer.LoadImage = function (path) {
 	var instance = this;
 	instance.m_numberOfAsset ++;
 	cc.loader.loadImg(path, function(err){
+		var tex = cc.textureCache.addImage(path);
+        tex.handleLoadedTexture(true);
+		
 		instance.m_numberOfAssetLoaded++;
 		if (instance.m_numberOfAsset == instance.m_numberOfAssetLoaded) {
+			GlobalInit();
 			PushMenu();
 		}
 	});
@@ -40,6 +44,7 @@ g_gsLoaderMainLayer.LoadFile = function (path) {
 	cc.loader.load(path, function(err){
 		instance.m_numberOfAssetLoaded++;
 		if (instance.m_numberOfAsset == instance.m_numberOfAssetLoaded) {
+			GlobalInit();
 			PushMenu();
 		}
 	});

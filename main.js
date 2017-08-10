@@ -23,8 +23,12 @@ var g_gsAction;
 
 var GLOBAL_TEXT_FADE_SPEED = 1200;
 
-function GlobalInit() {
+function InitLoader() {
 	g_gsLoader = new GSLoader();
+	g_gsLoader.retain();
+}
+
+function GlobalInit() {
 	g_gsMenu = new GSMenu();
 	g_gsMission = new GSMission();
 	g_gsInfo = new GSInfo();
@@ -33,7 +37,6 @@ function GlobalInit() {
 	g_gsUpgrade = new GSUpgrade();
 	g_gsAction = new GSAction();
 	
-	g_gsLoader.retain();
 	g_gsMenu.retain();
 	g_gsMission.retain();
 	g_gsInfo.retain();
@@ -114,7 +117,7 @@ cc.game.onStart = function(){
 
     //load resources
 	cc.LoaderScene.preload(g_preloadList, function () {
-		GlobalInit();
+		InitLoader();
         cc.director.runScene(g_gsLoader);
     }, this);
 	
