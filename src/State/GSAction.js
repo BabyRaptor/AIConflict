@@ -113,7 +113,6 @@ g_gsActionUILayer.AddEventListener = function () {
 			return true;
 		},
 		onTouchesMoved: function (touches, event) {
-			cc.log ("CONFLICT " + g_touchCount);
 			if (g_touchCount == 1) {
 				g_battle.MoveCamera (g_touchCurrent.x - touches[0].getLocation().x, g_touchCurrent.y - touches[0].getLocation().y);
 				g_touchCurrent = touches[0].getLocation();
