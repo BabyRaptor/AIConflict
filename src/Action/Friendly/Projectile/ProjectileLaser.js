@@ -9,21 +9,21 @@ function ProjectileLaser(battle, layer, owner) {
 	
 	this.m_target = null;
 	
-	this.m_sprite = GetFromPool("res/GSAction/Turret/4-Laser/Laser.png");
+	this.m_sprite = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/4-Laser/Laser.png");
 	this.m_sprite.setAnchorPoint(cc.p(0.5, 0));
 	this.m_sprite.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
 	this.m_sprite.setLocalZOrder (LAYER_PROJECTILE);
 	this.m_sprite.setVisible (false);
 	layer.addChild(this.m_sprite);
 	
-	this.m_tipSprite1 = GetFromPool("res/GSAction/Turret/4-Laser/LaserTip.png");
+	this.m_tipSprite1 = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/4-Laser/LaserTip.png");
 	this.m_tipSprite1.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_tipSprite1.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
 	this.m_tipSprite1.setLocalZOrder (LAYER_PROJECTILE);
 	this.m_tipSprite1.setVisible (false);
 	layer.addChild(this.m_tipSprite1);
 	
-	this.m_tipSprite2 = GetFromPool("res/GSAction/Turret/4-Laser/LaserTip.png");
+	this.m_tipSprite2 = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/4-Laser/LaserTip.png");
 	this.m_tipSprite2.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_tipSprite2.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
 	this.m_tipSprite2.setLocalZOrder (LAYER_PROJECTILE);
@@ -107,9 +107,9 @@ function ProjectileLaser(battle, layer, owner) {
 			layer.removeChild(this.m_tipSprite1);
 			layer.removeChild(this.m_tipSprite2);
 			
-			PutIntoPool(this.m_sprite);
-			PutIntoPool(this.m_tipSprite1);
-			PutIntoPool(this.m_tipSprite2);
+			g_spritePool.PutSpriteIntoPool(this.m_sprite);
+			g_spritePool.PutSpriteIntoPool(this.m_tipSprite1);
+			g_spritePool.PutSpriteIntoPool(this.m_tipSprite2);
 		}
 	}
 	

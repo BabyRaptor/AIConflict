@@ -14,7 +14,7 @@ function ProjectileGatling(battle, layer, x, y, angle, owner) {
 	var spriteX = (this.m_x + 0.5) * BLOCK_SIZE - battle.m_mapRealWidth * 0.5;
 	var spriteY = (this.m_y + 0.5) * BLOCK_SIZE - battle.m_mapRealHeight * 0.5;
 	
-	this.m_sprite = GetFromPool("res/GSAction/Turret/1-Gatling/Projectile.png");
+	this.m_sprite = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/1-Gatling/Projectile.png");
 	this.m_sprite.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_sprite.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
 	this.m_sprite.setLocalZOrder (LAYER_PROJECTILE);
@@ -61,7 +61,7 @@ function ProjectileGatling(battle, layer, x, y, angle, owner) {
 		if (this.m_live == true) {
 			this.m_live = false;
 			layer.removeChild(this.m_sprite);
-			PutIntoPool(this.m_sprite);
+			g_spritePool.PutSpriteIntoPool(this.m_sprite);
 		}
 	}
 	

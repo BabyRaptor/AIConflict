@@ -37,7 +37,7 @@ CreateEnemy[2][4] = function (battle, layer, path, modifier) {
 	var skillAlphaCount		= 0;
 	
 	// The main sprite
-	enemy.m_sprite = GetFromPool("res/GSAction/Enemy/Area-" + ENEMY_AREA  + "/" + ENEMY_TYPE + ".png");
+	enemy.m_sprite = g_spritePool.GetSpriteFromPool("res/GSAction/Enemy/Area-" + ENEMY_AREA  + "/" + ENEMY_TYPE + ".png");
 	enemy.m_sprite.setAnchorPoint(cc.p(0.5, 0.5));
 	enemy.m_sprite.setLocalZOrder (LAYER_ENEMY + 3);
 	enemy.m_sprite.setRotation(enemy.m_angle);
@@ -48,7 +48,7 @@ CreateEnemy[2][4] = function (battle, layer, path, modifier) {
 	enemy.m_laserBeam = new EnemyLaser (battle, layer, ENEMY_AREA, enemy);
 	
 	// Skill sprite
-	enemy.m_skillSprite = GetFromPool("res/GSAction/Enemy/Area-" + ENEMY_AREA + "/Haste.png");
+	enemy.m_skillSprite = g_spritePool.GetSpriteFromPool("res/GSAction/Enemy/Area-" + ENEMY_AREA + "/Haste.png");
 	enemy.m_skillSprite.setAnchorPoint(cc.p(0.5, 0.5));
 	enemy.m_skillSprite.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
 	enemy.m_skillSprite.setLocalZOrder (LAYER_PROJECTILE);
@@ -180,8 +180,8 @@ CreateEnemy[2][4] = function (battle, layer, path, modifier) {
 		layer.removeChild(this.m_sprite);
 		layer.removeChild(this.m_skillSprite);
 		
-		PutIntoPool(this.m_sprite);
-		PutIntoPool(this.m_skillSprite);
+		g_spritePool.PutSpriteIntoPool(this.m_sprite);
+		g_spritePool.PutSpriteIntoPool(this.m_skillSprite);
 		
 		this.m_laserBeam.Hide();
 		this.m_laserBeam.Destroy();

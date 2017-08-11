@@ -16,6 +16,7 @@
 		"src/Upgrade.js",
 		"src/Profile.js",
 		"src/SpritePool.js",
+		"src/EmitterPool.js",
 		
 		"src/UI/BigButton.js",
 		"src/UI/TurretButton.js",

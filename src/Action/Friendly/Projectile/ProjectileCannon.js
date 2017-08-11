@@ -18,7 +18,7 @@ function ProjectileCannon(battle, layer, x, y, angle, owner) {
 	var spriteX = (this.m_x + 0.5) * BLOCK_SIZE - battle.m_mapRealWidth * 0.5;
 	var spriteY = (this.m_y + 0.5) * BLOCK_SIZE - battle.m_mapRealHeight * 0.5;
 	
-	this.m_sprite = GetFromPool("res/GSAction/Turret/2-Cannon/Projectile.png");
+	this.m_sprite = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/2-Cannon/Projectile.png");
 	this.m_sprite.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_sprite.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
 	this.m_sprite.setLocalZOrder (LAYER_PROJECTILE);
@@ -26,13 +26,10 @@ function ProjectileCannon(battle, layer, x, y, angle, owner) {
 	this.m_sprite.setPosition (cc.p(spriteX, spriteY));
 	layer.addChild(this.m_sprite);
 	
-	this.m_trailParticle = cc.ParticleSystem.create("res/GSAction/Turret/2-Cannon/Particle.plist");
+	this.m_trailParticle = g_emitterPool.GetEmitterFromPool("res/GSAction/Turret/2-Cannon/Particle.plist", layer);
 	this.m_trailParticle.setLocalZOrder (LAYER_PROJECTILE);
 	this.m_trailParticle.setBlendAdditive (true);
-	this.m_trailParticle.setAutoRemoveOnFinish (true);
 	this.m_trailParticle.setPositionType(cc.ParticleSystem.TYPE_RELATIVE);
-	this.m_trailParticle.resetSystem();
-	layer.addChild(this.m_trailParticle);
 	battle.RegisterEmitter (this.m_trailParticle);
 	
 	this.m_markForKill = false;
@@ -97,8 +94,12 @@ function ProjectileCannon(battle, layer, x, y, angle, owner) {
 	this.Destroy = function() {
 		if (this.m_live == true) {
 			this.m_live = false;
+			
 			layer.removeChild(this.m_sprite);
-			PutIntoPool(this.m_sprite);
+			g_spritePool.PutSpriteIntoPool(this.m_sprite);
+			
+			//layer.removeChild(this.m_trailParticle); // Don't fucking remove the particle
+			g_emitterPool.PutEmitterToPool(this.m_trailParticle);
 			battle.UnregisterEmitter (this.m_trailParticle);
 		}
 	}

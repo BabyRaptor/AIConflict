@@ -31,20 +31,20 @@ function TurretMissile (battle, layer, x, y) {
 	// Sprite
 	var spriteX = (this.m_x + 0.5) * BLOCK_SIZE - battle.m_mapRealWidth * 0.5;
 	var spriteY = (this.m_y + 0.5) * BLOCK_SIZE - battle.m_mapRealHeight * 0.5;
-	this.m_baseSprite = GetFromPool("res/GSAction/Turret/3-Missile/Base.png");
+	this.m_baseSprite = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/3-Missile/Base.png");
 	this.m_baseSprite.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_baseSprite.setLocalZOrder (LAYER_TOWER_BASE);
 	this.m_baseSprite.setPosition (cc.p(spriteX, spriteY));
 	layer.addChild(this.m_baseSprite);
 	
-	this.m_shadowSprite = GetFromPool("res/GSAction/Turret/3-Missile/Shadow.png");
+	this.m_shadowSprite = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/3-Missile/Shadow.png");
 	this.m_shadowSprite.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_shadowSprite.setLocalZOrder (LAYER_TOWER_SHADOW);
 	this.m_shadowSprite.setRotation(this.m_angle);
 	this.m_shadowSprite.setPosition (cc.p(spriteX + TURRET_SHADOW_OFFSET, spriteY - TURRET_SHADOW_OFFSET));
 	layer.addChild(this.m_shadowSprite);
 	
-	this.m_turretSprite = GetFromPool("res/GSAction/Turret/3-Missile/Turret.png");
+	this.m_turretSprite = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/3-Missile/Turret.png");
 	this.m_turretSprite.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_turretSprite.setLocalZOrder (LAYER_TOWER_TURRET);
 	this.m_turretSprite.setRotation(this.m_angle);
@@ -52,7 +52,7 @@ function TurretMissile (battle, layer, x, y) {
 	layer.addChild(this.m_turretSprite);
 	
 	
-	this.m_blindedIcon = GetFromPool("res/GSAction/Turret/BlindIcon.png");
+	this.m_blindedIcon = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/BlindIcon.png");
 	this.m_blindedIcon.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_blindedIcon.setLocalZOrder (LAYER_TOWER_TURRET_STATUS);
 	this.m_blindedIcon.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
@@ -60,7 +60,7 @@ function TurretMissile (battle, layer, x, y) {
 	this.m_blindedIcon.setScale(0.15);
 	layer.addChild(this.m_blindedIcon);
 	
-	this.m_slowedIcon = GetFromPool("res/GSAction/Turret/SlowIcon.png");
+	this.m_slowedIcon = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/SlowIcon.png");
 	this.m_slowedIcon.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_slowedIcon.setLocalZOrder (LAYER_TOWER_TURRET_STATUS);
 	this.m_slowedIcon.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
@@ -68,7 +68,7 @@ function TurretMissile (battle, layer, x, y) {
 	this.m_slowedIcon.setScale(0.15);
 	layer.addChild(this.m_slowedIcon);
 	
-	this.m_stunnedIcon = GetFromPool("res/GSAction/Turret/StunIcon.png");
+	this.m_stunnedIcon = g_spritePool.GetSpriteFromPool("res/GSAction/Turret/StunIcon.png");
 	this.m_stunnedIcon.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_stunnedIcon.setLocalZOrder (LAYER_TOWER_TURRET_STATUS);
 	this.m_stunnedIcon.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
@@ -312,11 +312,11 @@ function TurretMissile (battle, layer, x, y) {
 		layer.removeChild(this.m_slowedIcon);
 		layer.removeChild(this.m_stunnedIcon);
 		
-		PutIntoPool(this.m_baseSprite);
-		PutIntoPool(this.m_shadowSprite);
-		PutIntoPool(this.m_turretSprite);
-		PutIntoPool(this.m_blindedIcon);
-		PutIntoPool(this.m_slowedIcon);
-		PutIntoPool(this.m_stunnedIcon);
+		g_spritePool.PutSpriteIntoPool(this.m_baseSprite);
+		g_spritePool.PutSpriteIntoPool(this.m_shadowSprite);
+		g_spritePool.PutSpriteIntoPool(this.m_turretSprite);
+		g_spritePool.PutSpriteIntoPool(this.m_blindedIcon);
+		g_spritePool.PutSpriteIntoPool(this.m_slowedIcon);
+		g_spritePool.PutSpriteIntoPool(this.m_stunnedIcon);
 	}
 }

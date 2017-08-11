@@ -86,7 +86,7 @@ function Explosion(battle, layer) {
 	this.m_y = 0;
 	this.m_scale = 1;
 	
-	this.m_sprite = GetFromPool("res/GSAction/Explosion/DebrisDefault.png");
+	this.m_sprite = g_spritePool.GetSpriteFromPool("res/GSAction/Explosion/DebrisDefault.png");
 	this.m_sprite.setAnchorPoint(cc.p(0.5, 0.5));
 	this.m_sprite.setBlendFunc (new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE));
 	this.m_sprite.setLocalZOrder (LAYER_EXPLOSION);
@@ -150,6 +150,6 @@ function Explosion(battle, layer) {
 	
 	this.Destroy = function () {
 		layer.removeChild(this.m_sprite);
-		PutIntoPool(this.m_sprite);
+		g_spritePool.PutSpriteIntoPool(this.m_sprite);
 	}
 }

@@ -15,12 +15,12 @@ function EnemyProjectile(battle, layer, type, x, y, angle) {
 	if (type == ENEMY_PROJECTILE_RED_GATLING) {
 		this.m_damage = 5;
 		this.m_speed = 10;
-		this.m_sprite = GetFromPool("res/GSAction/Enemy/Area-1/Gatling.png");
+		this.m_sprite = g_spritePool.GetSpriteFromPool("res/GSAction/Enemy/Area-1/Gatling.png");
 	}
 	else if (type == ENEMY_PROJECTILE_ORANGE_BALL) {
 		this.m_damage = 6;
 		this.m_speed = 6;
-		this.m_sprite = GetFromPool("res/GSAction/Enemy/Area-2/Ball.png");
+		this.m_sprite = g_spritePool.GetSpriteFromPool("res/GSAction/Enemy/Area-2/Ball.png");
 	}
 	
 	this.m_sprite.setAnchorPoint(cc.p(0.5, 0.5));
@@ -71,6 +71,6 @@ function EnemyProjectile(battle, layer, type, x, y, angle) {
 	this.Destroy = function() {
 		this.m_live = false;
 		layer.removeChild(this.m_sprite);
-		PutIntoPool(this.m_sprite);
+		g_spritePool.PutSpriteIntoPool(this.m_sprite);
 	}
 }

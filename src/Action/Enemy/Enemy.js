@@ -64,7 +64,7 @@ function Enemy (battle, layer) {
 		this.m_HPLength = this.m_size * HP_BAR_LENGTH_MULTIPLIER;
 		
 		// Create the HP bars
-		this.m_HPBarRed = GetFromPool("res/GSAction/Enemy/HPBar.png");
+		this.m_HPBarRed = g_spritePool.GetSpriteFromPool("res/GSAction/Enemy/HPBar.png");
 		this.m_HPBarRed.setTextureRect (cc.rect(0, 0, 1, 4));
 		this.m_HPBarRed.setAnchorPoint(cc.p(0, 0.5));
 		this.m_HPBarRed.setLocalZOrder (LAYER_ENEMY + 4);
@@ -72,7 +72,7 @@ function Enemy (battle, layer) {
 		this.m_HPBarRed.setScaleX (this.m_HPLength);
 		layer.addChild(this.m_HPBarRed);
 		
-		this.m_HPBarGreen = GetFromPool("res/GSAction/Enemy/HPBar.png");
+		this.m_HPBarGreen = g_spritePool.GetSpriteFromPool("res/GSAction/Enemy/HPBar.png");
 		this.m_HPBarGreen.setTextureRect (cc.rect(0, 4, 1, 4));
 		this.m_HPBarGreen.setAnchorPoint(cc.p(0, 0.5));
 		this.m_HPBarGreen.setLocalZOrder (LAYER_ENEMY + 4);
@@ -217,8 +217,8 @@ function Enemy (battle, layer) {
 		layer.removeChild(this.m_HPBarGreen);
 		
 		// Reserve removed sprites
-		PutIntoPool(this.m_HPBarRed);
-		PutIntoPool(this.m_HPBarGreen);
+		g_spritePool.PutSpriteIntoPool(this.m_HPBarRed);
+		g_spritePool.PutSpriteIntoPool(this.m_HPBarGreen);
 	}
 }
 

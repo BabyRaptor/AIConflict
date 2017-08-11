@@ -120,7 +120,7 @@ function Battle(bgLayer, layer, campaignID, missionID) {
 		this.m_forcePause = false;
 		this.m_gameSpeed = 1;
 		
-		
+		g_emitterPool.CleanEmitterPool();
 	}
 	// =====================================================================
 	
