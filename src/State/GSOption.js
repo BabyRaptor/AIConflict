@@ -58,11 +58,15 @@ var GSOption = cc.Scene.extend({
 		this.addChild(g_gsOptionMainLayer);
 		g_gsOptionMainLayer.Init();
 		this.added = true;
+		this.eventListenerAdded = false;
 	},
     onEnter:function () {
 		this._super();
-		g_gsOptionMainLayer.AddEventListener();
 		g_gsOptionMainLayer.scheduleUpdate();
+		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+			g_gsOptionMainLayer.AddEventListener();
+			this.eventListenerAdded = true;
+		}
     }
 });
 

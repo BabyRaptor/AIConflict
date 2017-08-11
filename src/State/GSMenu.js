@@ -57,11 +57,14 @@ var GSMenu = cc.Scene.extend({
 		this._super();
 		this.addChild(g_gsMenuMainLayer);
 		g_gsMenuMainLayer.Init();
+		this.eventListenerAdded = false;
 	},
     onEnter:function () {
 		this._super();
-        g_gsMenuMainLayer.AddEventListener();
-		//g_gsMenuMainLayer.scheduleUpdate();
+		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+			g_gsMenuMainLayer.AddEventListener();
+			this.eventListenerAdded = true;
+		}
     }
 });
 

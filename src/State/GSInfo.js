@@ -121,11 +121,15 @@ var GSInfo = cc.Scene.extend({
 		this.addChild(g_gsInfoMainLayer);
 		g_gsInfoMainLayer.Init();
 		this.added = true;
+		this.eventListenerAdded = false;
 	},
     onEnter:function () {
 		this._super();
-		g_gsInfoMainLayer.AddEventListener();
 		g_gsInfoMainLayer.scheduleUpdate();
+		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+			g_gsInfoMainLayer.AddEventListener();
+			this.eventListenerAdded = true;
+		}
     }
 });
 

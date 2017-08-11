@@ -58,11 +58,15 @@ var GSShop = cc.Scene.extend({
 		this.addChild(g_gsShopMainLayer);
 		g_gsShopMainLayer.Init();
 		this.added = true;
+		this.eventListenerAdded = false;
 	},
     onEnter:function () {
 		this._super();
-		g_gsShopMainLayer.AddEventListener();
 		g_gsShopMainLayer.scheduleUpdate();
+		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+			g_gsShopMainLayer.AddEventListener();
+			this.eventListenerAdded = true;
+		}
     }
 });
 

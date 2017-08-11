@@ -89,13 +89,15 @@ g_gsActionUILayer.Init = function () {
 	this.addChild(this.m_baseShieldBarContent);
 	
 	
-	
 	this.m_inGameMenu = new InGameMenu(this, CANVAS_W * 0.5, CANVAS_H * 0.5);
 	this.m_resultPopup = new ResultPopup(this, CANVAS_W * 0.5, CANVAS_H * 0.5);
+	
+	this.m_allowUpdate = false;
 }
 
 g_gsActionUILayer.AddEventListener = function () {
 	var instance = this;
+	g_touchCount = 0;
 	cc.eventManager.addListener({
 		event: cc.EventListener.TOUCH_ALL_AT_ONCE,
 		swallowTouches: true,
@@ -111,19 +113,25 @@ g_gsActionUILayer.AddEventListener = function () {
 			return true;
 		},
 		onTouchesMoved: function (touches, event) {
+			cc.log ("CONFLICT " + g_touchCount);
 			if (g_touchCount == 1) {
 				g_battle.MoveCamera (g_touchCurrent.x - touches[0].getLocation().x, g_touchCurrent.y - touches[0].getLocation().y);
 				g_touchCurrent = touches[0].getLocation();
 			}
 			else {
-				if (g_oldDistance == 0) {
-					g_oldDistance = DistanceBetweenTwoPoint (touches[0].getLocation().x, touches[0].getLocation().y, touches[1].getLocation().x, touches[1].getLocation().y);
+				if (touches[1] == null) {
+					g_touchCount = 0;
 				}
 				else {
-					var newDistance = DistanceBetweenTwoPoint (touches[0].getLocation().x, touches[0].getLocation().y, touches[1].getLocation().x, touches[1].getLocation().y);
-					var zoom = newDistance / g_oldDistance;
-					g_battle.ApplyZoom (zoom);
-					g_oldDistance = newDistance;
+					if (g_oldDistance == 0) {
+						g_oldDistance = DistanceBetweenTwoPoint (touches[0].getLocation().x, touches[0].getLocation().y, touches[1].getLocation().x, touches[1].getLocation().y);
+					}
+					else {
+						var newDistance = DistanceBetweenTwoPoint (touches[0].getLocation().x, touches[0].getLocation().y, touches[1].getLocation().x, touches[1].getLocation().y);
+						var zoom = newDistance / g_oldDistance;
+						g_battle.ApplyZoom (zoom);
+						g_oldDistance = newDistance;
+					}
 				}
 			}
 		},
@@ -252,23 +260,26 @@ g_gsActionUILayer.Reset = function() {
 	g_gsActionUILayer.m_waveLabel.setString (g_battle.m_wave + " / " + (g_battle.m_mission.m_waveData.length-1));
 	g_gsActionUILayer.m_speedButton.SetCaption ("Speed: " + g_battle.m_gameSpeed + "x");
 	g_gsActionUILayer.m_startButton.SetCaption("Start");
+	g_touchCount = 0;
 }
 
 
 g_gsActionUILayer.update = function (deltaTime) {
-	g_battle.Update(deltaTime);
-	this.m_buildPanel.Update(deltaTime);
-	this.m_infoPanel.Update(deltaTime);
-	
-	var shieldAmount = g_battle.m_base.m_shield * 93 / g_battle.m_base.m_maxShield;
-	this.m_baseShieldBarContent.setTextureRect (cc.rect(0, 0, shieldAmount >> 0, 21));
-	this.m_baseShieldBarContent.setContentSize (cc.size(shieldAmount >> 0, 21));
-	
-	var hpAmount = g_battle.m_base.m_HP * 93 / g_battle.m_base.m_maxHP;
-	this.m_baseHPBarContent.setTextureRect (cc.rect(0, 0, hpAmount >> 0, 21));
-	this.m_baseHPBarContent.setContentSize (cc.size(hpAmount >> 0, 21));
-	
-	g_gsActionUILayer.m_moneyLabel.setString (g_battle.m_money >> 0);
+	if (this.m_allowUpdate == true) {
+		g_battle.Update(deltaTime);
+		this.m_buildPanel.Update(deltaTime);
+		this.m_infoPanel.Update(deltaTime);
+		
+		var shieldAmount = g_battle.m_base.m_shield * 93 / g_battle.m_base.m_maxShield;
+		this.m_baseShieldBarContent.setTextureRect (cc.rect(0, 0, shieldAmount >> 0, 21));
+		this.m_baseShieldBarContent.setContentSize (cc.size(shieldAmount >> 0, 21));
+		
+		var hpAmount = g_battle.m_base.m_HP * 93 / g_battle.m_base.m_maxHP;
+		this.m_baseHPBarContent.setTextureRect (cc.rect(0, 0, hpAmount >> 0, 21));
+		this.m_baseHPBarContent.setContentSize (cc.size(hpAmount >> 0, 21));
+		
+		g_gsActionUILayer.m_moneyLabel.setString (g_battle.m_money >> 0);
+	}
 }
 
 
@@ -280,14 +291,20 @@ var GSAction = cc.Scene.extend({
 		this.addChild(g_gsActionBackgroundLayer);
 		this.addChild(g_gsActionBattleLayer);
 		this.addChild(g_gsActionUILayer);
+		this.eventListenerAdded = false;
 	},
     onEnter:function () {
 		this._super();
 		g_gsActionUILayer.Reset();
 		g_gsActionUILayer.scheduleUpdate();
-		g_gsActionUILayer.AddEventListener();
+		
+		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+			g_gsActionUILayer.AddEventListener();
+			this.eventListenerAdded = true;
+		}
     },
 	NewBattle:function (campaignID, missionID) {
+		g_gsActionUILayer.m_allowUpdate = true;
 		g_battle = new Battle (g_gsActionBackgroundLayer, g_gsActionBattleLayer, campaignID, missionID);
 	},
 	RestartBattle:function () {
@@ -300,6 +317,7 @@ var GSAction = cc.Scene.extend({
 		g_gsActionUILayer.Reset();
 	},
 	Destroy:function () {
+		g_gsActionUILayer.m_allowUpdate = false;
 		g_battle.Destroy();
 		g_gsActionBackgroundLayer.removeAllChildren();
 		g_gsActionBattleLayer.removeAllChildren();

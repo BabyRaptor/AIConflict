@@ -1,3 +1,5 @@
+var g_isAndroidBuild = false;
+
 var CANVAS_W = 1280;
 var CANVAS_H = 720;
 
@@ -105,9 +107,12 @@ cc.game.onStart = function(){
     cc.view.setOrientation(cc.ORIENTATION_LANDSCAPE);
 
     // Setup the resolution policy and design resolution size
-	//cc.view.setDesignResolutionSize(CANVAS_W, CANVAS_H, cc.ResolutionPolicy.FIXED_HEIGHT);
-	
-    cc.view.setDesignResolutionSize(CANVAS_W, CANVAS_H, cc.ResolutionPolicy.FIXED);
+	if (g_isAndroidBuild) {
+		cc.view.setDesignResolutionSize(CANVAS_W, CANVAS_H, cc.ResolutionPolicy.FIXED_HEIGHT);
+	}
+	else {
+	    cc.view.setDesignResolutionSize(CANVAS_W, CANVAS_H, cc.ResolutionPolicy.FIXED);
+	}
 
     // The game will be resized when browser size change
     cc.view.resizeWithBrowserSize(true);

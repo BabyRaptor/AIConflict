@@ -16,7 +16,6 @@ function EmitterPool() {
 			for (var i=0; i<emitterPool[path].length; i++) {
 				if (emitterPool[path][i].m_active == false && emitterPool[path][i].m_layer == layer) {
 					tempEmitter = emitterPool[path][i];
-					console.log ("Get from cache");
 					break;
 				}
 			}

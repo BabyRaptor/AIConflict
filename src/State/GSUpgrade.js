@@ -248,12 +248,16 @@ var GSUpgrade = cc.Scene.extend({
 		this.addChild(g_gsUpgradeMainLayer);
 		g_gsUpgradeMainLayer.Init();
 		this.added = true;
+		this.eventListenerAdded = false;
 	},
     onEnter:function () {
 		this._super();
 		g_gsUpgradeMainLayer.Refresh();
-		g_gsUpgradeMainLayer.AddEventListener();
 		g_gsUpgradeMainLayer.scheduleUpdate();
+		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+			g_gsUpgradeMainLayer.AddEventListener();
+			this.eventListenerAdded = true;
+		}
     }
 });
 

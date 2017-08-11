@@ -256,16 +256,21 @@ var GSMission = cc.Scene.extend({
 		
 		this.addChild(g_gsMissionUILayer);
 		g_gsMissionUILayer.Init();
+		
+		this.eventListenerAdded = false;
 	},
     onEnter:function () {
 		this._super();
 		g_gsMissionBGLayer.scheduleUpdate();
 		
 		g_gsMissionStarMapLayer.scheduleUpdate();
-		g_gsMissionStarMapLayer.AddEventListener();
-		
-		g_gsMissionUILayer.AddEventListener();
 		g_gsMissionUILayer.scheduleUpdate();
+		
+		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+			g_gsMissionStarMapLayer.AddEventListener();
+			g_gsMissionUILayer.AddEventListener();
+			this.eventListenerAdded = true;
+		}
     },
 	Reset:function() {
 		g_gsMissionBGLayer.Reset();
