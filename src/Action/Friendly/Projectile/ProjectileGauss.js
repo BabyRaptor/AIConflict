@@ -61,7 +61,7 @@ function ProjectileGauss(battle, layer, x, y, angle, owner) {
 	this.CheckCollision = function () {
 		for (var i=0; i<battle.m_enemies.length; i++) {
 			var tempEnemy = battle.m_enemies[i];
-			if (hitList.indexOf (tempEnemy) == -1) {
+			if (tempEnemy.m_live == true && hitList.indexOf (tempEnemy) == -1) {
 				if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= tempEnemy.m_size) {
 					tempEnemy.Hit (this.GetDamage(), this.GetPierce());
 					hitList.push (tempEnemy);

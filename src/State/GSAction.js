@@ -97,7 +97,6 @@ g_gsActionUILayer.Init = function () {
 
 g_gsActionUILayer.AddEventListener = function () {
 	var instance = this;
-	g_touchCount = 0;
 	cc.eventManager.addListener({
 		event: cc.EventListener.TOUCH_ALL_AT_ONCE,
 		swallowTouches: true,
@@ -259,7 +258,9 @@ g_gsActionUILayer.Reset = function() {
 	g_gsActionUILayer.m_waveLabel.setString (g_battle.m_wave + " / " + (g_battle.m_mission.m_waveData.length-1));
 	g_gsActionUILayer.m_speedButton.SetCaption ("Speed: " + g_battle.m_gameSpeed + "x");
 	g_gsActionUILayer.m_startButton.SetCaption("Start");
-	g_touchCount = 0;
+	
+	g_gsActionUILayer.m_buildPanel.m_showing = false;
+	g_gsActionUILayer.m_infoPanel.m_showing = false;
 }
 
 
@@ -314,6 +315,8 @@ var GSAction = cc.Scene.extend({
 		
 		g_battle = new Battle (g_gsActionBackgroundLayer, g_gsActionBattleLayer, campaignID, missionID);
 		g_gsActionUILayer.Reset();
+		
+		g_gsActionUILayer.m_allowUpdate = true;
 	},
 	Destroy:function () {
 		g_gsActionUILayer.m_allowUpdate = false;

@@ -398,7 +398,7 @@ function Battle(bgLayer, layer, campaignID, missionID) {
 		}
 		
 		for (var i=this.m_enemies.length-1; i>=0; i--) {
-			if (this.m_enemies[i].m_live == false) {
+			if (this.m_enemies[i].m_isGarbage == true) {
 				this.m_enemies.splice(i, 1);
 			}
 		}

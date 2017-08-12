@@ -47,6 +47,8 @@ function Enemy (battle, layer) {
 	// Level
 	this.m_modifer		= 0;
 	
+	// Signal garbage collector
+	this.m_isGarbage 	= false;
 	
 	
 	
@@ -144,7 +146,7 @@ function Enemy (battle, layer) {
 			
 			// Die bitch
 			if (this.m_HP <= 0) {
-				this.Destroy();
+				this.Explode();
 				this.LocalDestroy();
 			}
 		}

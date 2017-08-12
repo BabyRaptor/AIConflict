@@ -70,7 +70,7 @@ function ProjectileCannon(battle, layer, x, y, angle, owner) {
 	this.CheckCollision = function () {
 		for (var i=0; i<battle.m_enemies.length; i++) {
 			var tempEnemy = battle.m_enemies[i];
-			if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= tempEnemy.m_size) {
+			if (tempEnemy.m_live == true && DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= tempEnemy.m_size) {
 				this.m_markForKill = true;
 				this.m_sprite.setVisible (false);
 				this.m_trailParticle.stopSystem();

@@ -19,13 +19,16 @@ CreateEnemy[1][4] = function (battle, layer, path, modifier) {
 	var ENEMY_SKILL_RATE			= 20;
 	var ENEMY_SKILL_SPRITE_ALPHA	= 150;
 	var ENEMY_SKILL_FADE_SPEED		= 2;
-	
+	// Destruction
+	var ENEMY_EXPLOSION_COUNT 		= 2;
+	var ENEMY_EXPLOSION_INTERVAL	= 0.2;
 	
 	// Create and init the enemy prototype
 	var enemy = CreateEnemyPrototype (battle, layer);
 	enemy.m_moveSpeed = ENEMY_MOVE_SPEED;
 	enemy.m_rotateSpeed = ENEMY_ROTATE_SPEED;
 	enemy.Init(path, ENEMY_SIZE, modifier);
+	
 	
 	// Some variable belong to the prototype
 	enemy.m_HP 				= (ENEMY_HP * modifier) >> 0;
@@ -37,6 +40,8 @@ CreateEnemy[1][4] = function (battle, layer, path, modifier) {
 	var targetIndex			= 1;
 	var cooldownCount 		= 0;
 	var skillAlphaCount		= 0;
+	var explosionCount		= 0;
+	var explosionNumber		= 0;
 	
 	// The main sprite
 	enemy.m_sprite = g_spritePool.GetSpriteFromPool("res/GSAction/Enemy/Area-" + ENEMY_AREA  + "/" + ENEMY_TYPE + ".png");
@@ -145,6 +150,21 @@ CreateEnemy[1][4] = function (battle, layer, path, modifier) {
 				skillAlphaCount -= 6.28;
 			}
 		}
+		else {
+			if (explosionNumber >= ENEMY_EXPLOSION_COUNT) {
+				this.Destroy();
+			}
+	
+			explosionCount += deltaTime;
+			if (explosionCount >= ENEMY_EXPLOSION_INTERVAL) {
+				explosionCount -= ENEMY_EXPLOSION_INTERVAL;
+				explosionNumber ++;
+				
+				var offsetX = this.m_size - Math.random() * this.m_size * 2;
+				var offsetY = this.m_size - Math.random() * this.m_size * 2;
+				battle.SpawnExplosion (EXPLOSION_DEBRIS, 1, this.m_x + offsetX, this.m_y + offsetY);
+			}
+		}
 	}
 	
 	enemy.UpdateVisual = function () {
@@ -175,9 +195,12 @@ CreateEnemy[1][4] = function (battle, layer, path, modifier) {
 		}
 	}
 	
+	enemy.Explode = function() {
+		battle.SpawnExplosion (EXPLOSION_DEBRIS, 1.5, this.m_x, this.m_y);
+	}
 	// Destroy
 	enemy.Destroy = function () {
-		battle.SpawnExplosion (EXPLOSION_DEBRIS, 1.8, this.m_x, this.m_y);
+		this.m_isGarbage = true;
 		
 		layer.removeChild(this.m_sprite);
 		layer.removeChild(this.m_skillSprite);

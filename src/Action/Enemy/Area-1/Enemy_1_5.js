@@ -13,7 +13,9 @@ CreateEnemy[1][5] = function (battle, layer, path, modifier) {
 	// Attack
 	var ENEMY_DAMAGE_PER_SECOND		= 15;
 	var ENEMY_BARREL_DISTANCE 		= 1;
-	
+	// Destruction
+	var ENEMY_EXPLOSION_COUNT 		= 2;
+	var ENEMY_EXPLOSION_INTERVAL	= 0.2;
 	
 	// Create and init the enemy prototype
 	var enemy = CreateEnemyPrototype (battle, layer);
@@ -30,6 +32,8 @@ CreateEnemy[1][5] = function (battle, layer, path, modifier) {
 	
 	// Some variable used only by this enemy
 	var targetIndex			= 1;
+	var explosionCount		= 0;
+	var explosionNumber		= 0;
 	
 	// The main sprite
 	enemy.m_sprite = g_spritePool.GetSpriteFromPool("res/GSAction/Enemy/Area-" + ENEMY_AREA  + "/" + ENEMY_TYPE + ".png");
@@ -122,6 +126,21 @@ CreateEnemy[1][5] = function (battle, layer, path, modifier) {
 			
 			this.m_laserBeam.Update (deltaTime);
 		}
+		else {
+			if (explosionNumber >= ENEMY_EXPLOSION_COUNT) {
+				this.Destroy();
+			}
+	
+			explosionCount += deltaTime;
+			if (explosionCount >= ENEMY_EXPLOSION_INTERVAL) {
+				explosionCount -= ENEMY_EXPLOSION_INTERVAL;
+				explosionNumber ++;
+				
+				var offsetX = this.m_size - Math.random() * this.m_size * 2;
+				var offsetY = this.m_size - Math.random() * this.m_size * 2;
+				battle.SpawnExplosion (EXPLOSION_DEBRIS, 1, this.m_x + offsetX, this.m_y + offsetY);
+			}
+		}
 	}
 	
 	enemy.UpdateVisual = function () {
@@ -138,14 +157,17 @@ CreateEnemy[1][5] = function (battle, layer, path, modifier) {
 		}
 	}
 	
-	// Destroy
-	enemy.Destroy = function () {
-		battle.SpawnExplosion (EXPLOSION_DEBRIS, 1.8, this.m_x, this.m_y);
-		layer.removeChild(this.m_sprite);
-		g_spritePool.PutSpriteIntoPool(this.m_sprite);
-		
+	enemy.Explode = function() {
+		battle.SpawnExplosion (EXPLOSION_DEBRIS, 1.5, this.m_x, this.m_y);
 		this.m_laserBeam.Hide();
 		this.m_laserBeam.Destroy();
+	}
+	// Destroy
+	enemy.Destroy = function () {
+		this.m_isGarbage = true;
+		
+		layer.removeChild(this.m_sprite);
+		g_spritePool.PutSpriteIntoPool(this.m_sprite);
 	}
 	
 	return enemy;

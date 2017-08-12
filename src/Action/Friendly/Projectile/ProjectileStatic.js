@@ -55,7 +55,7 @@ function ProjectileStatic(battle, layer, x, y, angle, owner) {
 			
 			for (var i=0; i<battle.m_enemies.length; i++) {
 				var tempEnemy = battle.m_enemies[i];
-				if (DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= this.GetAOE() + tempEnemy.m_size) {
+				if (tempEnemy.m_live == true && DistanceBetweenTwoPoint (this.m_x, this.m_y, tempEnemy.m_x, tempEnemy.m_y) <= this.GetAOE() + tempEnemy.m_size) {
 					tempEnemy.Hit (this.GetDamage() * deltaTime, this.GetPierce());
 					
 					var alreadyATarget = false;
