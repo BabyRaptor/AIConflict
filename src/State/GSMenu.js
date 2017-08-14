@@ -61,7 +61,7 @@ var GSMenu = cc.Scene.extend({
 	},
     onEnter:function () {
 		this._super();
-		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+		if (this.eventListenerAdded == false || !cc.sys.isNative) {
 			g_gsMenuMainLayer.AddEventListener();
 			this.eventListenerAdded = true;
 		}

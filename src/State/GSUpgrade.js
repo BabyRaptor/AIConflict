@@ -254,7 +254,7 @@ var GSUpgrade = cc.Scene.extend({
 		this._super();
 		g_gsUpgradeMainLayer.Refresh();
 		g_gsUpgradeMainLayer.scheduleUpdate();
-		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+		if (this.eventListenerAdded == false || !cc.sys.isNative) {
 			g_gsUpgradeMainLayer.AddEventListener();
 			this.eventListenerAdded = true;
 		}

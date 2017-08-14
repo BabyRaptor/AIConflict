@@ -126,7 +126,7 @@ var GSInfo = cc.Scene.extend({
     onEnter:function () {
 		this._super();
 		g_gsInfoMainLayer.scheduleUpdate();
-		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+		if (this.eventListenerAdded == false || !cc.sys.isNative) {
 			g_gsInfoMainLayer.AddEventListener();
 			this.eventListenerAdded = true;
 		}

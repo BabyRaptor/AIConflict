@@ -1,5 +1,3 @@
-var g_isAndroidBuild = false;
-
 var CANVAS_W = 1280;
 var CANVAS_H = 720;
 
@@ -107,7 +105,7 @@ cc.game.onStart = function(){
     cc.view.setOrientation(cc.ORIENTATION_LANDSCAPE);
 
     // Setup the resolution policy and design resolution size
-	if (g_isAndroidBuild) {
+	if (cc.sys.isNative) {
 		cc.view.setDesignResolutionSize(CANVAS_W, CANVAS_H, cc.ResolutionPolicy.FIXED_HEIGHT);
 	}
 	else {

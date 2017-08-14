@@ -298,7 +298,7 @@ var GSAction = cc.Scene.extend({
 		g_gsActionUILayer.Reset();
 		g_gsActionUILayer.scheduleUpdate();
 		
-		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+		if (this.eventListenerAdded == false || !cc.sys.isNative) {
 			g_gsActionUILayer.AddEventListener();
 			this.eventListenerAdded = true;
 		}

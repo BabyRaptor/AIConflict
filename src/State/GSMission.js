@@ -266,7 +266,7 @@ var GSMission = cc.Scene.extend({
 		g_gsMissionStarMapLayer.scheduleUpdate();
 		g_gsMissionUILayer.scheduleUpdate();
 		
-		if (this.eventListenerAdded == false || g_isAndroidBuild == false) {
+		if (this.eventListenerAdded == false || !cc.sys.isNative) {
 			g_gsMissionStarMapLayer.AddEventListener();
 			g_gsMissionUILayer.AddEventListener();
 			this.eventListenerAdded = true;
